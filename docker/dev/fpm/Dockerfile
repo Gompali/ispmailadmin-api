@@ -2,7 +2,7 @@ FROM php:7.4-fpm-alpine
 MAINTAINER Yannick Granger <yannick.granger@services.inter-invest.fr>
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV SYMFONYCLI_VERSION="4.11.2"
+ENV SYMFONYCLI_VERSION="4.11.3"
 
 ENV TZ=Europe/Paris
 

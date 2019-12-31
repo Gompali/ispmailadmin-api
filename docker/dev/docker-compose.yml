@@ -32,13 +32,16 @@ services:
         remote_port=9001
         idekey=PHPSTORM
 
-  ispmailadmin-api_node:
-    build: ./node
-    container_name: ispmailadmin-api_node
-    working_dir: /srv/app
-    volumes:
-      - "../../:/srv/app:delegated"
-
+  ispmailadmin-mysql:
+    image: mysql/mysql-server:5.7
+    container_name: ispmailadmin-mysql
+    networks:
+      - docker-env
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
 
 volumes:
   cache_ispmailadmin-api:

@@ -79,7 +79,7 @@ stop-docker: ## (Docker) Stop containers (for this project only)
 
 # All
 .PHONY: start
-start: start-deps start-docker ## (Docker) Start : dependencies and containers (for this project only)
+start: start-docker ## (Docker) Start : dependencies and containers (for this project only)
 
 .PHONY: stop
 stop:  stop-deps stop-docker ## (Docker) Stop : dependencies and containers (for this project only)
