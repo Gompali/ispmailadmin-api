@@ -1,0 +1,6 @@
+parameters:
+    level: 7
+    paths:
+        - %rootDir%/../../../src
+    excludes_analyse:
+        - %rootDir%/../../../src/User/Domain/Form/Validator/*

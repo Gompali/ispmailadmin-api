@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /page-a.html
+Noindex: /page-a.html

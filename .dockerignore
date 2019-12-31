@@ -1,0 +1,10 @@
+./phpunit.xml.dist
+./phpstan.neon.dist
+./behat.yml.dist
+./php_cs.dist
+./php_cs.cache
+./gitignore
+vendor
+var/cache
+var/log
+.idea
