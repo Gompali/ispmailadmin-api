@@ -36,6 +36,10 @@ services:
         tags: ['messenger.message_handler']
 
 
+    jwt_token_authenticator:
+        class: App\Infra\Services\Authentication\JwtTokenAuthenticator
+        autowire: true
+
     # Commands to create Email accounts
     App\UI\Console\CreateAllAccountCommand:
         tags:

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Action;
 
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\VirtualUsers;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,6 +42,10 @@ class CreateTokenAction
             'email' => $email,
         ]);
 
+        if (!$user instanceof VirtualUsers) {
+            throw new BadCredentialsException();
+        }
+
         $plainPassword = $data['password'];
         $dbPassword = substr($user->getPassword(), 11);
         $match = password_verify($plainPassword, $dbPassword);
@@ -51,6 +56,6 @@ class CreateTokenAction
 
         $jwt = $this->encoder->create($user);
 
-        return new JsonResponse(null, 200);
+        return new JsonResponse($jwt, 200);
     }
 }

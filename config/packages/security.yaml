@@ -11,7 +11,7 @@ security:
     providers:
         doctrine:
             entity:
-                class: App\Doain\VirtualUsers
+                class: App\Domain\VirtualUsers
                 property: email
 
     firewalls:
@@ -24,8 +24,8 @@ security:
             stateless: true
             guard:
                 authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+                    - jwt_token_authenticator
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/,       roles: ROLE_ADMIN }

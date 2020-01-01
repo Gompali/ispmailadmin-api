@@ -4,29 +4,44 @@ declare(strict_types=1);
 
 namespace App\Infra\Services\Authentication;
 
+use App\Domain\Repository\UserRepositoryInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        // TODO: Implement start() method.
-    }
+    /** @var JWTEncoderInterface */
+    private $jwtEncoder;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(Request $request)
-    {
-        // TODO: Implement supports() method.
+    /** @var UserProviderInterface */
+    private $userProvider;
+
+    /** @var UserRepositoryInterface */
+    private $userRepository;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    public function __construct(
+        JWTEncoderInterface $jwtEncoder,
+        TranslatorInterface $translator,
+        UserRepositoryInterface $userRepository,
+        UserProviderInterface $userProvider
+    ) {
+        $this->jwtEncoder = $jwtEncoder;
+        $this->translator = $translator;
+        $this->userProvider = $userProvider;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -34,7 +49,17 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        // TODO: Implement getCredentials() method.
+        $extractor = new AuthorizationHeaderTokenExtractor(
+            'Bearer',
+            'Authorization'
+        );
+        $token = $extractor->extract($request);
+
+        if (!$token) {
+            return;
+        }
+
+        return $token;
     }
 
     /**
@@ -42,7 +67,15 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // TODO: Implement getUser() method.
+        $data = $this->jwtEncoder->decode($credentials);
+
+        if (false === $data) {
+            throw new CustomUserMessageAuthenticationException('Invalid token');
+        }
+
+        $username = $data['username'];
+
+        return $this->userRepository->findOneBy(['email' => $username]);
     }
 
     /**
@@ -50,7 +83,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // TODO: Implement checkCredentials() method.
+        return true;
     }
 
     /**
@@ -66,7 +99,6 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // TODO: Implement onAuthenticationSuccess() method.
     }
 
     /**
@@ -74,6 +106,26 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        // TODO: Implement supportsRememberMe() method.
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        $data = [
+            'message' => $this->translator->trans('Authentication Required'),
+        ];
+
+        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supports(Request $request)
+    {
+        return $request->headers->has('authorization');
     }
 }

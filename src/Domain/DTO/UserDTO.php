@@ -25,7 +25,7 @@ class UserDTO
             'email' => $this->email,
             'password' => $this->password,
             'quota' => $this->quota,
-            'domain' => trim($domain) ?? '',
+            'domain' => trim($domain) ?? null,
         ];
     }
 }

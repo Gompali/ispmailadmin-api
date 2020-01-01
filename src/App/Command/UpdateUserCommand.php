@@ -42,4 +42,12 @@ class UpdateUserCommand
     {
         return (int) $this->payload['quota'];
     }
+
+    /**
+     * @return string
+     */
+    public function getDomain(): string
+    {
+        return $this->payload['domain'];
+    }
 }

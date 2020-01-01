@@ -131,8 +131,6 @@ class VirtualUsers implements UserInterface
      */
     public function eraseCredentials()
     {
-        $this->email = null;
-        $this->password = null;
     }
 
     public function setRoles(array $roles): void
