@@ -1,3 +1,32 @@
-index:
-    path: /test
-    controller: App\Controller\DefaultController
+#index:
+#    path: /test
+#    controller: App\Controller\DefaultController
+create_user:
+  path: /user
+  methods: POST
+  controller: App\UI\Action\CreateUserAction
+
+read_user:
+  path: /user/{email}
+  methods: GET
+  controller: App\UI\Action\GetUserByEmailAction
+
+all_user:
+  path: /users
+  methods: GET
+  controller: App\UI\Action\ListUserAction
+
+update_user:
+  path: /user/{email}
+  methods: PUT
+  controller: App\UI\Action\UpdateUserAction
+
+delete_user:
+  path: /user/{email}
+  methods: DELETE
+  controller: App\UI\Action\DeleteUserAction
+
+get_token:
+  path: /login
+  methods: POST
+  controller: App\UI\Action\CreateTokenAction

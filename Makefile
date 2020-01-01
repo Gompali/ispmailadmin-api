@@ -58,12 +58,12 @@ help:
 # Dependencies
 .PHONY: start-deps
 start-deps: ## (Docker) Start dependencies (for this project only)
-	docker-machine start
+	- docker-machine start
 	@if [ -z ${DOCKER_DEPENDENCIES} ]; then \
 		echo 'No dependencies in .env file !!'; \
 		exit 1; \
 	fi
-	@docker-env up ${DOCKER_DEPENDENCIES}
+	docker-env up ${DOCKER_DEPENDENCIES}
 
 .PHONY: stop-deps
 stop-deps: ## (Docker) Stop dependencies (for this project only)
@@ -79,7 +79,7 @@ stop-docker: ## (Docker) Stop containers (for this project only)
 
 # All
 .PHONY: start
-start: start-docker ## (Docker) Start : dependencies and containers (for this project only)
+start: start-deps start-docker ## (Docker) Start : dependencies and containers (for this project only)
 
 .PHONY: stop
 stop:  stop-deps stop-docker ## (Docker) Stop : dependencies and containers (for this project only)

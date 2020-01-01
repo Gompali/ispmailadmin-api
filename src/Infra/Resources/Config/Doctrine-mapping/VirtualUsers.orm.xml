@@ -1,0 +1,24 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Domain\VirtualUsers" table="virtual_users">
+        <id name="id" column="id" type="string" length="64">
+            <generator strategy="NONE" />
+        </id>
+
+        <field name="email" length="100"/>
+        <field name="password" length="150"/>
+        <field name="quota" type="integer" />
+        <field name="roles" type="json" />
+
+        <unique-constraints>
+            <unique-constraint columns="email" name="email" />
+        </unique-constraints>
+
+        <many-to-one field="virtualDomain" target-entity="App\Domain\VirtualDomains">
+            <join-column name="domain_id" referenced-column-name="id" />
+        </many-to-one>
+
+    </entity>
+</doctrine-mapping>
