@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
+use Doctrine\Common\Collections\Collection;
+
 class VirtualAliases
 {
     /** @var string */
@@ -15,8 +17,8 @@ class VirtualAliases
     /** @var string */
     private $destination;
 
-    /** @var VirtualDomains */
-    private $virtualDomain;
+    /** @var Collection */
+    private $domain;
 
     /**
      * virtualAliases constructor.
@@ -59,18 +61,18 @@ class VirtualAliases
     }
 
     /**
-     * @return VirtualDomains
+     * @return Collection
      */
-    public function getVirtualDomain(): VirtualDomains
+    public function getDomain(): Collection
     {
-        return $this->virtualDomain;
+        return $this->domain;
     }
 
     /**
-     * @param VirtualDomains $virtualDomain
+     * @param Collection $domain
      */
-    public function setVirtualDomain(VirtualDomains $virtualDomain): void
+    public function setDomain(Collection $domain): void
     {
-        $this->virtualDomain = $virtualDomain;
+        $this->domain = $domain;
     }
 }

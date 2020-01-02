@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191231204923 extends AbstractMigration
+final class Version20200102203348 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,8 @@ final class Version20191231204923 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql('INSERT INTO virtual_domains VALUES ("6e017231-e606-4acc-b852-eaed4c852da3","hangukeo.eu");');
+        $this->addSql("grant all on mailserver.* to 'mailadmin'@'localhost' identified by ".getenv('MAILADMIN_PASSWORD').';');
+        $this->addSql("grant all on mailserver.* to 'mailserver'@'127.0.0.1' identified by ".getenv('MAILSERVER_PASSWORD').';');
     }
 
     public function down(Schema $schema): void

@@ -8,5 +8,17 @@
         </id>
 
         <field name="name" length="50" />
+        
+        <one-to-many field="users" target-entity="App\Domain\VirtualUsers" mapped-by="domain">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+        </one-to-many>
+        <one-to-many field="aliases" target-entity="App\Domain\VirtualAliases" mapped-by="domain">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+        </one-to-many>
+
     </entity>
 </doctrine-mapping>

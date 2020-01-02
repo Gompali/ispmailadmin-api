@@ -15,4 +15,18 @@ class DomainRepository extends ServiceEntityRepository implements DomainReposito
     {
         parent::__construct($registry, VirtualDomains::class);
     }
+
+    public function remove(VirtualDomains $domain)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($domain);
+        $em->flush();
+    }
+
+    public function save(VirtualDomains $domain)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($domain);
+        $em->flush();
+    }
 }

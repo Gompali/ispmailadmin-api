@@ -1,20 +1,22 @@
-#index:
-#    path: /test
-#    controller: App\Controller\DefaultController
-create_user:
-  path: /user
+get_token:
+  path: /login
   methods: POST
-  controller: App\UI\Action\CreateUserAction
-
-read_user:
-  path: /user/{email}
-  methods: GET
-  controller: App\UI\Action\GetUserByEmailAction
+  controller: App\UI\Action\CreateTokenAction
 
 all_user:
   path: /users
   methods: GET
   controller: App\UI\Action\ListUserAction
+
+create_user:
+  path: /user
+  methods: POST
+  controller: App\UI\Action\CreateUserAction
+
+get_user:
+  path: /user/{email}
+  methods: GET
+  controller: App\UI\Action\GetUserByEmailAction
 
 update_user:
   path: /user/{email}
@@ -26,7 +28,22 @@ delete_user:
   methods: DELETE
   controller: App\UI\Action\DeleteUserAction
 
-get_token:
-  path: /login
+create_domain:
+  path: /domain/{domain}
+  methods: GET
+  controller: App\UI\Action\CreateDomainAction
+
+delete_domain:
+  path: /domain/{domain}
+  methods: DELETE
+  controller: App\UI\Action\DeleteDomainAction
+
+create_alias:
+  path: /alias
   methods: POST
-  controller: App\UI\Action\CreateTokenAction
+  controller: App\UI\Action\CreateAliasAction
+
+delete_alias:
+  path: /alias/source/{source}/destination/{destination}
+  methods: DELETE
+  controller: App\UI\Action\DeleteAliasAction

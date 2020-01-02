@@ -15,4 +15,18 @@ class AliasRepository extends ServiceEntityRepository implements AliasRepository
     {
         parent::__construct($registry, VirtualAliases::class);
     }
+
+    public function remove(VirtualAliases $alias)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($alias);
+        $em->flush();
+    }
+
+    public function save(VirtualAliases $alias)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($alias);
+        $em->flush();
+    }
 }
