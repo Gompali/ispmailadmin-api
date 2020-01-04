@@ -38,7 +38,7 @@ class PatchUserCommandHandler
 
         if ($command->getPassword()) {
             if (strlen((string) $command->getPassword()) >= 12) {
-                $hash = substr($dbUser->getPassword(),11,strlen($command->getPassword()));
+                $hash = substr($dbUser->getPassword(), 11);
                 if(!password_verify($command->getPassword(), $hash)){
                     $newPassword = password_hash($command->getPassword(), PASSWORD_BCRYPT);
                     $dbUser->setPassword('{BLF-CRYPT}'.$newPassword);
