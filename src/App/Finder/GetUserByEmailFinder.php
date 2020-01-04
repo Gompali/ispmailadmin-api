@@ -6,6 +6,7 @@ namespace App\App\Finder;
 
 use App\App\Query\GetUserByEmailQuery;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\VirtualUsers;
 
 class GetUserByEmailFinder
 {
@@ -17,7 +18,7 @@ class GetUserByEmailFinder
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(GetUserByEmailQuery $query)
+    public function __invoke(GetUserByEmailQuery $query): ?VirtualUsers
     {
         return $this->userRepository->findOneBy([
             'email' => $query->getEmail(),

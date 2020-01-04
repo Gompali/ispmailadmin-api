@@ -15,10 +15,10 @@ class VirtualDomains
     /** @var string */
     private $name;
 
-    /** @var Collection */
+    /** @var Collection<VirtualUsers> */
     private $users;
 
-    /** @var Collection */
+    /** @var Collection<VirtualAliases> */
     private $aliases;
 
     public function __construct(string $id, string $name)
@@ -39,7 +39,7 @@ class VirtualDomains
         return $this->name;
     }
 
-    public function addUser(VirtualUsers $user)
+    public function addUser(VirtualUsers $user): VirtualDomains
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
@@ -48,7 +48,7 @@ class VirtualDomains
         return $this;
     }
 
-    public function removeUser(VirtualUsers $user)
+    public function removeUser(VirtualUsers $user): VirtualDomains
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
@@ -57,7 +57,7 @@ class VirtualDomains
         return $this;
     }
 
-    public function addAlias(VirtualAliases $alias)
+    public function addAlias(VirtualAliases $alias): VirtualDomains
     {
         if (!$this->aliases->contains($alias)) {
             $this->aliases->add($alias);
@@ -66,7 +66,7 @@ class VirtualDomains
         return $this;
     }
 
-    public function removeAlias(VirtualAliases $alias)
+    public function removeAlias(VirtualAliases $alias): VirtualDomains
     {
         if ($this->aliases->contains($alias)) {
             $this->aliases->removeElement($alias);

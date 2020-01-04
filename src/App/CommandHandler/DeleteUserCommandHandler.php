@@ -21,7 +21,7 @@ class DeleteUserCommandHandler
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(DeleteUserCommand $command)
+    public function __invoke(DeleteUserCommand $command): void
     {
         $user = $this->userRepository->findOneBy([
             'email' => $command->getEmail(),

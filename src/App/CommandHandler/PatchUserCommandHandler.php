@@ -25,7 +25,7 @@ class PatchUserCommandHandler
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function __invoke(PatchUserCommand $command)
+    public function __invoke(PatchUserCommand $command): void
     {
         /** @var VirtualUsers $dbUser */
         $dbUser = $this->userRepository->find($command->getId());
@@ -38,9 +38,10 @@ class PatchUserCommandHandler
 
         if ($command->getPassword()) {
             if (strlen((string) $command->getPassword()) >= 12) {
-                if (false === $this->passwordEncoder->isPasswordValid($dbUser, $command->getPassword())) {
-                    $newPassword = $this->passwordEncoder->encodePassword($command->getPassword());
-                    $dbUser->setPassword($newPassword);
+                $hash = substr($dbUser->getPassword(),11,strlen($command->getPassword()));
+                if(!password_verify($command->getPassword(), $hash)){
+                    $newPassword = password_hash($command->getPassword(), PASSWORD_BCRYPT);
+                    $dbUser->setPassword('{BLF-CRYPT}'.$newPassword);
                     $hasChange = true;
                 }
             }

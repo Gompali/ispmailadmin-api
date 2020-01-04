@@ -16,7 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class UserType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver) : void
     {
         $resolver->setDefaults([
             'data_class' => UserDTO::class,
@@ -24,7 +27,11 @@ class UserType extends AbstractType
         ]);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
             ->add('email', TextType::class, [

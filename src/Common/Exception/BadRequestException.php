@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
-class BadRequestException extends BadRequestHttpException
+final class BadRequestException extends BadRequestHttpException
 {
     /**
      * @param array $errors

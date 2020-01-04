@@ -16,14 +16,14 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         parent::__construct($registry, VirtualUsers::class);
     }
 
-    public function save(VirtualUsers $user)
+    public function save(VirtualUsers $user):void
     {
         $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
     }
 
-    public function remove(VirtualUsers $user)
+    public function remove(VirtualUsers $user):void
     {
         $em = $this->getEntityManager();
         $em->remove($user);

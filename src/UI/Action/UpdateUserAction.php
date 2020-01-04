@@ -37,10 +37,10 @@ class UpdateUserAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(Request $request, string $email)
+    public function __invoke(Request $request, string $email): JsonResponse
     {
         $form = $this->formFactory->create(UserType::class);
-        $requestData = json_decode($request->getContent(), true);
+        $requestData = json_decode((string) $request->getContent(), true);
 
         if (null === $requestData) {
             throw new \JsonException('The Json sent for your request is Invalid');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Action;
 
+use App\Common\Exception\BadRequestException;
 use App\Domain\AdminUser;
 use App\Domain\Repository\AdminUserRepositoryInterface;
 use App\Domain\Repository\UserRepositoryInterface;
@@ -13,14 +14,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class CreateTokenAction
 {
-    /** @var UserRepositoryInterface */
+    /** @var AdminUserRepositoryInterface */
     private $adminUserRepository;
 
-    /** @var JWTEncoderInterface */
+    /** @var JWTTokenManagerInterface */
     private $encoder;
 
     /** @var UserPasswordEncoderInterface */
@@ -36,12 +36,12 @@ class CreateTokenAction
         $this->encoder = $encoder;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode((string) $request->getContent(), true);
 
         if (null === $data) {
-            throw new \InvalidArgumentException('Invalid Json sent in request', 400);
+            throw new BadRequestException('Invalid Json sent in request', null, 400);
         }
 
         $username = $data['username'];

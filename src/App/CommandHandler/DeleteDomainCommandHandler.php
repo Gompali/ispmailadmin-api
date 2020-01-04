@@ -19,7 +19,7 @@ class DeleteDomainCommandHandler
         $this->domainRepository = $domainRepository;
     }
 
-    public function __invoke(DeleteDomainCommand $command)
+    public function __invoke(DeleteDomainCommand $command): void
     {
         $domain = $command->getDomain();
         $dbDomain = $this->domainRepository->findOneBy(['name' => $domain]);

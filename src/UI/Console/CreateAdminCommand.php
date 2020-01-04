@@ -49,7 +49,7 @@ class CreateAdminCommand extends Command
         $this->password = $password;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Initilalise le compte administrateur');
     }

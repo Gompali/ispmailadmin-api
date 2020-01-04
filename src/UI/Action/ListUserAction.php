@@ -30,7 +30,7 @@ class ListUserAction
         $this->normalizer = $normalizer;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $envelope = $this->queryBus->dispatch(new ListUserQuery());
         $results = $this->handle($envelope);

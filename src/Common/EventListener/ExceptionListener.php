@@ -21,6 +21,8 @@ class ExceptionListener
 
     /**
      * ExceptionListener constructor.
+     * @param LoggerInterface $logger
+     * @param string $environment
      */
     public function __construct(LoggerInterface $logger, string $environment)
     {
@@ -28,7 +30,7 @@ class ExceptionListener
         $this->environment = $environment;
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $exception = $event->getException();
 

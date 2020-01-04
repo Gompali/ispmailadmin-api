@@ -21,7 +21,7 @@ class DeleteAliasAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(Request $request, string $source, string $destination)
+    public function __invoke(Request $request, string $source, string $destination): JsonResponse
     {
         $this->commandBus->dispatch(new DeleteAliasCommand($source, $destination));
 

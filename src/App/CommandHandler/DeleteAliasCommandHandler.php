@@ -17,7 +17,7 @@ class DeleteAliasCommandHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(DeleteAliasCommand $command)
+    public function __invoke(DeleteAliasCommand $command): void
     {
         $alias = $this->repository->findOneBy([
             'source' => $command->getSource(),

@@ -8,7 +8,7 @@ use App\Domain\VirtualUsers;
 
 interface UserRepositoryInterface
 {
-    public function save(VirtualUsers $user);
+    public function save(VirtualUsers $user): void;
 
     public function find($id, $lockMode = null, $lockVersion = null);
 
@@ -18,5 +18,5 @@ interface UserRepositoryInterface
 
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
 
-    public function remove(VirtualUsers $user);
+    public function remove(VirtualUsers $user): void;
 }

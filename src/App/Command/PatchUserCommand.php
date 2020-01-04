@@ -8,6 +8,7 @@ use App\Domain\DTO\UserDTO;
 
 class PatchUserCommand
 {
+    /** @var array<mixed> */
     private $payload = [];
 
     public function __construct(UserDTO $DTO, string $id)
@@ -15,22 +16,22 @@ class PatchUserCommand
         $this->payload = array_merge($DTO->toArray(), ['id' => $id]);
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->payload['id'];
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->payload['email'];
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->payload['password'];
     }
 
-    public function getQuota()
+    public function getQuota(): ?int
     {
         return $this->payload['quota'];
     }

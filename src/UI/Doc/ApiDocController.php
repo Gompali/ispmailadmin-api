@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiDocController
 {
-    public function __invoke()
+    /**
+     * @return Response
+     */
+    public function __invoke(): Response
     {
         return new Response(include 'swagger.html');
     }

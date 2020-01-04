@@ -11,6 +11,7 @@ use App\Domain\VirtualUsers;
 use App\Infra\Factory\UserFactory;
 use App\UI\Form\UserType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -35,9 +36,9 @@ class PatchUserAction
         $this->formFactory = $formFactory;
     }
 
-    public function __invoke(Request $request, string $email)
+    public function __invoke(Request $request, string $email): JsonResponse
     {
-        $requestContent = json_decode($request->getContent(), true);
+        $requestContent = json_decode((string) $request->getContent(), true);
         if (null === $requestContent) {
             throw new BadRequestException('Invalid Json sent to request');
         }
@@ -56,5 +57,7 @@ class PatchUserAction
         $form->submit($requestContent, $clearMissing);
 
         $this->commandBus->dispatch(new PatchUserCommand($form->getData(), $user->getId()));
+
+        return new JsonResponse(null, 200);
     }
 }
