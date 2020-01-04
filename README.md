@@ -71,3 +71,7 @@
      - if login succeed the api will return a Bearer token (a long string known as JWT Token)
      
      - use this JWT Token (expires after 1 hour) in authorization header and prefix "Bearer "
+
+## Update Swagger
+
+    docker run -i yousan/swagger-yaml-to-html < petstore.yaml > petstore.html

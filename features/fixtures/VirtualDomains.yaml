@@ -1,0 +1,5 @@
+App\Domain\VirtualDomains:
+  domain:
+    __construct:
+      - 69018878-a72d-42dc-be9f-66eb7e8bcadd
+      - example.org

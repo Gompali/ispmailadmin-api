@@ -12,8 +12,8 @@ get_token:
 
 #domain
 create_domain:
-  path: /domain/{domain}
-  methods: GET
+  path: /domain
+  methods: POST
   controller: App\UI\Action\CreateDomainAction
 
 delete_domain:
