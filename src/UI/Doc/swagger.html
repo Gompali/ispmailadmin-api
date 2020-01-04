@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui.css" >
+  <style>
+    html
+    {
+      box-sizing: border-box;
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
+    *,
+    *:before,
+    *:after
+    {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin:0;
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+
+<div id="swagger-ui"></div>
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
+  <defs>
+    <symbol viewBox="0 0 20 20" id="unlocked">
+          <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"></path>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="locked">
+      <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="close">
+      <path d="M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="large-arrow">
+      <path d="M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 20 20" id="large-arrow-down">
+      <path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"/>
+    </symbol>
+
+
+    <symbol viewBox="0 0 24 24" id="jump-to">
+      <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"/>
+    </symbol>
+
+    <symbol viewBox="0 0 24 24" id="expand">
+      <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+    </symbol>
+  </defs>
+ </svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui-bundle.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui-standalone-preset.js"> </script>
+<script>
+window.onload = function() {
+
+  var spec = {"openapi": "3.0.0", "info": {"title": "ISP Mail Admin API", "version": "1.0.0"}, "servers": [{"url": "example.org/api", "description": "ISP Mail Admin API"}, {"url": "https:hangukeo.eu", "description": "Mail server API"}], "security": [{"bearerAuth": []}], "paths": {"/login": {"post": {"summary": "Authenticate to the API as an administrator", "description": "Admin Login", "requestBody": {"description": "Client side search object", "required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/LoginObject"}}}}, "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TokenObject"}}}}, "401": {"description": "Unauthorized"}, "404": {"description": "Resource Not Found"}}}}, "/domain/{domain}": {"get": {"security": [{"bearerAuth": []}], "summary": "Add a new domain", "parameters": [{"in": "path", "name": "domain", "schema": {"type": "string"}, "required": true, "description": "string representing domain name", "example": "example.org"}], "responses": {"201": {"description": "Created"}}}, "delete": {"security": [{"bearerAuth": []}], "summary": "Delete a domain", "parameters": [{"in": "path", "name": "domain", "schema": {"type": "string"}, "required": true, "description": "string representing domain name", "example": "example.org"}], "responses": {"200": {"description": "OK"}, "400": {"description": "Error : Bad Request"}}}}, "/users": {"get": {"security": [{"bearerAuth": []}], "summary": "Get list of users", "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserListObject"}}}}}}}, "/user": {"post": {"security": [{"bearerAuth": []}], "summary": "Create a new User", "description": "Admin Login", "requestBody": {"description": "Client side search object", "required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreateUserObject"}}}}, "responses": {"201": {"description": "Created"}, "400": {"description": "Bad Request"}}}}, "/user/{email}": {"get": {"security": [{"bearerAuth": []}], "summary": "Get a user", "parameters": [{"in": "path", "name": "email", "schema": {"type": "string"}, "required": true, "description": "email of user", "example": "user@example.org"}], "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DisplayUserObject"}}}}}}, "put": {"security": [{"bearerAuth": []}], "summary": "Update info of a user", "parameters": [{"in": "path", "name": "email", "schema": {"type": "string"}, "required": true, "description": "email of user", "example": "user@example.org"}], "requestBody": {"description": "Update user info", "required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UpdateUserObject"}}}}, "responses": {"201": {"description": "OK"}}}, "delete": {"security": [{"bearerAuth": []}], "summary": "Delete a user", "parameters": [{"in": "path", "name": "email", "schema": {"type": "string"}, "required": true, "description": "email of user", "example": "user@example.org"}], "responses": {"200": {"description": "OK"}, "400": {"description": "Error : Bad Request"}}}, "patch": {"security": [{"bearerAuth": []}], "summary": "Patch a user", "parameters": [{"in": "path", "name": "email", "schema": {"type": "string"}, "required": true, "description": "email of user", "example": "user@example.org"}], "requestBody": {"description": "Field to patch", "required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PatchUSerObject"}}}}, "responses": {"200": {"description": "OK"}, "400": {"description": "Error : Bad Request"}}}}, "/alias": {"post": {"summary": "Create an alias", "description": "Alias input", "requestBody": {"description": "You should input source and destination of alias", "required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AliasObject"}}}}, "responses": {"200": {"description": "OK"}, "400": {"description": "Bad Request"}}}}, "/alias/source/{source}/destination/{destination}": {"delete": {"summary": "Delete an alias", "description": "Alias input", "parameters": [{"in": "path", "name": "source", "schema": {"type": "string"}, "required": true, "description": "string representing the source email", "example": "source@example.org"}, {"in": "path", "name": "destination", "schema": {"type": "string"}, "required": true, "description": "string representing the source email", "example": "source@example.org"}], "responses": {"204": {"description": "Deleted"}}}}}, "components": {"securitySchemes": {"bearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}}, "schemas": {"AliasObject": {"type": "object", "required": ["source", "destination"], "properties": {"source": {"type": "string", "description": "source@exemple.org"}, "destination": {"type": "string", "description": "destination@exemple.org"}}}, "CreateUserObject": {"type": "object", "required": ["email", "password", "quota"], "properties": {"email": {"type": "string", "description": "user@exemple.org"}, "password": {"type": "string", "description": "alongpassword min 12 chars"}, "quota": {"type": "integer", "description": "quota in ko", "example": 1073456}}}, "LoginObject": {"type": "object", "required": ["username", "password"], "properties": {"username": {"type": "string"}, "password": {"type": "string"}}}, "DisplayUserObject": {"type": "object", "properties": {"id": {"type": "string", "example": "5dbe86ed-e3d6-45e4-a11c-5440fe356ac0"}, "email": {"type": "string", "example": "user@exemple.org"}, "quota": {"type": "integer", "description": "quota in ko", "example": 1073456}}}, "PatchUSerObject": {"type": "object", "properties": {"password": {"type": "string", "example": "NewPasswordWithLength>12"}, "quota": {"type": "integer", "description": "quota in ko", "example": 1073456}}}, "UpdateUserObject": {"type": "object", "required": ["password", "quota"], "properties": {"password": {"type": "string", "description": "alongpassword min 12 chars"}, "quota": {"type": "integer", "description": "quota in ko", "example": 1073456}}}, "UserListObject": {"type": "array", "items": {"$ref": "#/components/schemas/DisplayUserObject"}}, "TokenObject": {"type": "object", "required": ["token"], "properties": {"token": {"type": "string", "description": "auth_token", "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NzgxNDQyMzIsImV4cCI6MTU3ODE0NzgzMiwicm9sZXMiOlsiUk9MRV9BTUlOIl0sInVzZXJuYW1lIjoiZ29tcGFsIn0.JbBrhg-cj_0sLY588-V0eVi5e2GlWJZV42I4SQK0I5g9x1q5XXD_L4qB9sQ7tRuhmdKAnZMo7a0CdAA_fEgjv197VngRk0Id5FtJQKEWG7Eh2zF-NG5rkvG5t6oTtaFWez41XXxTZzay2jQNLeWPU-l2V_wTIgUJswZcAnBQtezWwLqq4n93jU1_cNa9kY9ZePPhsTWnbu8xAkaTU5GjHz01w1QjkPYCpLN4tNtQdnHH4YbtTGQi3rvg7UECqM8MeRtcXYQ-0iAJXTV8szgwwiaaMbtvmC44p2sTzRn2Q4REW3FqxfudBWlWNnrjN22267Hz3dxLwKMp93AHxuoi6xHCXQNX_MQz7EBkjhv-VFAWwzagyDXTQTNslZaDc7NKx1xCQtqwT1MXakihdEFK53EHt1hn4PXizeyA0Sj9z1BAv2SUAbEC-ny5BJNdQoZCnlMuUqQRTlnzaRAwd_8gO30deB_6LiFDEmejyeUtL1nQV-utY9K4JxtZ-jc0Spjrbw0GcrvaDvXM3BC7l6OqsvVSVmDWxs5xjQCYPiA6gTpU5NMYcmyDaNapBQp1-W7gVzajfBxc2iROGpkA1sb6U-Rx2CgPl1F7lbxq_sv0kZu979qm08T7pJV4RlswzaGP-BdPXDMCvwVPwzZO3-2M3Jl2m3_yPc8FPC-Bytvb1rY"}}}}}};
+
+  // Build a system
+  const ui = SwaggerUIBundle({
+    spec: spec,
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  })
+
+  window.ui = ui
+}
+</script>
+</body>
+
+</html>

@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
-class VirtualUsers implements UserInterface
+class VirtualUsers
 {
     /** @var string */
     private $id;
-
-    /** @var string */
-    private $salt;
 
     /** @var string */
     private $email;
@@ -23,14 +18,15 @@ class VirtualUsers implements UserInterface
     /** @var int */
     private $quota;
 
-    /** @var array */
-    private $roles;
-
     /** @var VirtualDomains */
     private $virtualDomain;
 
     /**
      * virtualUsers constructor.
+     * @param string $id
+     * @param string $email
+     * @param string $password
+     * @param int $quota
      */
     public function __construct(
         string $id,
@@ -42,8 +38,6 @@ class VirtualUsers implements UserInterface
         $this->email = $email;
         $this->password = $password;
         $this->quota = $quota;
-        $this->salt = null;
-        $this->roles[] = 'ROLE_USER';
     }
 
     /**
@@ -102,55 +96,9 @@ class VirtualUsers implements UserInterface
         $this->quota = $quota;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getUsername()
     {
         return $this->email;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function eraseCredentials()
-    {
-    }
-
-    public function setRoles(array $roles): void
-    {
-        $this->roles = $roles;
-    }
-
-    public function addRole(string $role)
-    {
-        if (!in_array($role, $this->roles)) {
-            $this->roles[] = $role;
-        }
-        return $this;
-    }
-
-    public function removeRole(string $role)
-    {
-        if (in_array($role, $this->roles)) {
-            unset($this->roles[$role]);
-        }
-        return $this;
     }
 }

@@ -18,6 +18,12 @@
         "version": "7.2.3"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
+    },
+    "symfony/asset": {
+        "version": "4.4.x-dev"
+    },
+    "zircote/swagger-php": {
+        "version": "dev-master"
     }
 }

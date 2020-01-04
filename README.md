@@ -37,3 +37,7 @@
 
     Vous devez avoir installé le docker-env : http://git.inter-invest.fr/ygranger/docker_env
     Attention, lire le README.md avant de cloner le repo
+    
+## Mise à jour du swagger :
+
+    $ docker run -i yousan/swagger-yaml-to-html < swagger.yaml > swagger.html    

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\App\CommandHandler;
 
 use App\App\Command\DeleteUserCommand;
+use App\Common\Exception\BadRequestException;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\VirtualUsers;
 
 class DeleteUserCommandHandler
 {
@@ -21,6 +23,14 @@ class DeleteUserCommandHandler
 
     public function __invoke(DeleteUserCommand $command)
     {
-        $this->userRepository->remove($command->getEmail());
+        $user = $this->userRepository->findOneBy([
+            'email' => $command->getEmail(),
+        ]);
+
+        if (!$user instanceof VirtualUsers) {
+            throw new BadRequestException('User not found');
+        }
+
+        $this->userRepository->remove($user);
     }
 }

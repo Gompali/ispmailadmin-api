@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infra\Services\Authentication;
 
+use App\Domain\Repository\AdminUserRepositoryInterface;
 use App\Domain\Repository\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +37,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
     public function __construct(
         JWTEncoderInterface $jwtEncoder,
         TranslatorInterface $translator,
-        UserRepositoryInterface $userRepository,
+        AdminUserRepositoryInterface $userRepository,
         UserProviderInterface $userProvider
     ) {
         $this->jwtEncoder = $jwtEncoder;
@@ -51,12 +53,13 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
     {
         $extractor = new AuthorizationHeaderTokenExtractor(
             'Bearer',
-            'Authorization'
+            'authorization'
         );
+
         $token = $extractor->extract($request);
 
         if (!$token) {
-            return;
+            throw new AuthenticationException('Token not found');
         }
 
         return $token;
@@ -67,7 +70,11 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $data = $this->jwtEncoder->decode($credentials);
+        try {
+            $data = $this->jwtEncoder->decode($credentials);
+        } catch (JWTDecodeFailureException $exception) {
+            throw new AuthenticationException($exception->getMessage());
+        }
 
         if (false === $data) {
             throw new CustomUserMessageAuthenticationException('Invalid token');
@@ -75,7 +82,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 
         $username = $data['username'];
 
-        return $this->userRepository->findOneBy(['email' => $username]);
+        return $this->userRepository->findOneBy(['username' => $username]);
     }
 
     /**
@@ -91,7 +98,6 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // TODO: Implement onAuthenticationFailure() method.
     }
 
     /**
@@ -99,6 +105,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+
     }
 
     /**

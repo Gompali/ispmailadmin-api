@@ -2,19 +2,23 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
         # use your user class name here
-        App\Domain\VirtualUsers:
+        App\Domain\AdminUser:
             # Use native password encoder
             # This value auto-selects the best possible hashing algorithm
             # (i.e. Sodium when available).
-            algorithm: bcrypt
+            algorithm: auto
 
     providers:
         doctrine:
             entity:
-                class: App\Domain\VirtualUsers
-                property: email
+                class: App\Domain\AdminUser
+                property: username
 
     firewalls:
+        doc:
+            pattern: ^/doc
+            anonymous: true
+            stateless: true
         login:
             pattern: ^/login
             anonymous: true
@@ -28,4 +32,5 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,       roles: ROLE_ADMIN }

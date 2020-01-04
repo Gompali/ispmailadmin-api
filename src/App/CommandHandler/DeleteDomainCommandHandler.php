@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\App\CommandHandler;
 
 use App\App\Command\DeleteDomainCommand;
+use App\Common\Exception\BadRequestException;
 use App\Domain\Repository\DomainRepositoryInterface;
+use App\Domain\VirtualDomains;
 
 class DeleteDomainCommandHandler
 {
@@ -20,7 +22,10 @@ class DeleteDomainCommandHandler
     public function __invoke(DeleteDomainCommand $command)
     {
         $domain = $command->getDomain();
-        $this->domainRepository->findOneBy(['name' => $domain]);
-        $this->domainRepository->remove($domain);
+        $dbDomain = $this->domainRepository->findOneBy(['name' => $domain]);
+        if (!$dbDomain instanceof VirtualDomains) {
+            throw new BadRequestException('Domain does not exists');
+        }
+        $this->domainRepository->remove($dbDomain);
     }
 }

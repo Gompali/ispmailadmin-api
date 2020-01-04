@@ -22,7 +22,7 @@ class CreateAliasAction
 
     public function __invoke(Request $request)
     {
-        $parameters = $request->request->all();
+        $parameters = json_decode($request->getContent(), true);
 
         if (!isset($parameters['source'])) {
             throw new BadRequestException('source alias is missing in request');
@@ -30,6 +30,7 @@ class CreateAliasAction
         if (!isset($parameters['destination'])) {
             throw new BadRequestException('destination alias is missing in request');
         }
+
 
         $this->commandBus->dispatch(new CreateAliasCommand(
             $parameters['source'],

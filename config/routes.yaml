@@ -1,8 +1,27 @@
+# Doc
+api_doc:
+  path: /doc
+  methods: GET
+  controller: App\UI\Doc\ApiDocController
+
+# auth
 get_token:
   path: /login
   methods: POST
   controller: App\UI\Action\CreateTokenAction
 
+#domain
+create_domain:
+  path: /domain/{domain}
+  methods: GET
+  controller: App\UI\Action\CreateDomainAction
+
+delete_domain:
+  path: /domain/{domain}
+  methods: DELETE
+  controller: App\UI\Action\DeleteDomainAction
+
+# users
 all_user:
   path: /users
   methods: GET
@@ -28,16 +47,12 @@ delete_user:
   methods: DELETE
   controller: App\UI\Action\DeleteUserAction
 
-create_domain:
-  path: /domain/{domain}
-  methods: GET
-  controller: App\UI\Action\CreateDomainAction
+patch_user:
+  path: /user/{email}
+  methods: PATCH
+  controller: App\UI\Action\PatchUserAction
 
-delete_domain:
-  path: /domain/{domain}
-  methods: DELETE
-  controller: App\UI\Action\DeleteDomainAction
-
+# alias
 create_alias:
   path: /alias
   methods: POST

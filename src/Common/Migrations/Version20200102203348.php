@@ -20,8 +20,10 @@ final class Version20200102203348 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql("grant all on mailserver.* to 'mailadmin'@'localhost' identified by ".getenv('MAILADMIN_PASSWORD').';');
-        $this->addSql("grant all on mailserver.* to 'mailserver'@'127.0.0.1' identified by ".getenv('MAILSERVER_PASSWORD').';');
+        $this->addSql("CREATE USER IF NOT EXISTS 'mailadmin'@'localhost' identified by '".getenv('MAILADMIN_PASSWORD')."';");
+        $this->addSql("grant all on mailserver.* to 'mailadmin'@'localhost' identified by '".getenv('MAILADMIN_PASSWORD')."';");
+        $this->addSql("CREATE USER IF NOT EXISTS 'mailserver'@'127.0.0.1' identified by '".getenv('MAILSERVER_PASSWORD')."';");
+        $this->addSql("grant all on mailserver.* to 'mailserver'@'127.0.0.1' identified by '".getenv('MAILSERVER_PASSWORD')."';");
     }
 
     public function down(Schema $schema): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\App\CommandHandler;
 
 use App\App\Command\CreateUserCommand;
+use App\Common\Exception\BadRequestException;
 use App\Domain\Repository\DomainRepositoryInterface;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\VirtualUsers;
@@ -41,7 +42,7 @@ class CreateUserCommandHandler
         ]);
 
         if (!$domain) {
-            throw new \InvalidArgumentException('The domain name is not known in the database');
+            throw new BadRequestException('The domain name does not exists in the database');
         }
 
         $user->setVirtualDomain($domain);

@@ -7,6 +7,7 @@ namespace App\UI\Action;
 use App\App\Query\ListUserQuery;
 use App\Common\Infra\Messenger\HandleTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -29,7 +30,7 @@ class ListUserAction
         $this->normalizer = $normalizer;
     }
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         $envelope = $this->queryBus->dispatch(new ListUserQuery());
         $results = $this->handle($envelope);

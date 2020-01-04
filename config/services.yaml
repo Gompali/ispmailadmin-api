@@ -17,12 +17,6 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-#    App\Controller\:
-#        resource: '../src/Controller'
-#        tags: ['controller.service_arguments']
-
     App\UI\Action\:
         resource: '../src/UI/Action/*'
         tags: ['controller.service_arguments']
@@ -35,64 +29,23 @@ services:
         resource: '../src/App/Finder/*'
         tags: ['messenger.message_handler']
 
-
     jwt_token_authenticator:
         class: App\Infra\Services\Authentication\JwtTokenAuthenticator
         autowire: true
 
-    # Commands to create Email accounts
-    App\UI\Console\CreateAllAccountCommand:
-        tags:
-            - {name: 'console.command'}
-
     App\UI\Console\CreateAdminCommand:
         arguments:
             $domainRepository: '@App\Domain\Repository\DomainRepositoryInterface'
-            $userRepository: '@App\Domain\Repository\UserRepositoryInterface'
+            $adminUserRepository: '@App\Domain\Repository\AdminUserRepositoryInterface'
             $encoder: '@security.user_password_encoder.generic'
-            $adminUsername: "%env(ADMIN_USERNAME)%"
-            $adminPassword: "%env(ADMIN_PASSWORD)%"
-            $adminQuota: "%env(ADMIN_QUOTA)%"
+            $username: "%env(ADMIN_USERNAME)%"
+            $password: "%env(ADMIN_PASSWORD)%"
         tags:
             - {name: 'console.command'}
 
-    App\UI\Console\CreateContactAccountCommand:
-        arguments:
-            $domainRepository: '@App\Domain\Repository\DomainRepositoryInterface'
-            $userRepository: '@App\Domain\Repository\UserRepositoryInterface'
-            $encoder: '@security.user_password_encoder.generic'
-            $contactUsername: "%env(CONTACT_USERNAME)%"
-            $contactPassword: "%env(CONTACT_PASSWORD)%"
-            $contactQuota: "%env(CONTACT_QUOTA)%"
-        tags:
-            - {name: 'console.command'}
 
-    App\UI\Console\CreateSystemAccountCommand:
+    App\Common\EventListener\ExceptionListener:
         arguments:
-            $userRepository: '@App\Domain\Repository\UserRepositoryInterface'
-            $encoder: '@security.user_password_encoder.generic'
-            $systemUsername: "%env(SYSTEM_USERNAME)%"
-            $systemPassword: "%env(SYSTEM_PASSWORD)%"
-            $systemQuota: "%env(SYSTEM_QUOTA)%"
+            $environment: "%kernel.environment%"
         tags:
-            - {name: 'console.command'}
-
-    App\UI\Console\CreateDirectorAccountCommand:
-        arguments:
-            $userRepository: '@App\Domain\Repository\UserRepositoryInterface'
-            $encoder: '@security.user_password_encoder.generic'
-            $directorUsername: "%env(DIRECTOR_USERNAME)%"
-            $directorPassword: "%env(DIRECTOR_PASSWORD)%"
-            $directorQuota: "%env(DIRECTOR_QUOTA)%"
-        tags:
-            - {name: 'console.command'}
-
-    App\UI\Console\CreateOwnerAccountCommand:
-        arguments:
-            $userRepository: '@App\Domain\Repository\UserRepositoryInterface'
-            $encoder: '@security.user_password_encoder.generic'
-            $ownerUsername: "%env(OWNER_USERNAME)%"
-            $ownerPassword: "%env(OWNER_PASSWORD)%"
-            $ownerQuota: "%env(OWNER_QUOTA)%"
-        tags:
-            - {name: 'console.command'}
+            - { name: kernel.event_listener, event: kernel.exception }

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Console;
 
+use App\Domain\AdminUser;
+use App\Domain\Repository\AdminUserRepositoryInterface;
 use App\Domain\Repository\DomainRepositoryInterface;
-use App\Domain\Repository\UserRepositoryInterface;
-use App\Domain\VirtualDomains;
-use App\Domain\VirtualUsers;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,40 +18,35 @@ class CreateAdminCommand extends Command
     /** @var string */
     protected static $defaultName = 'create:admin';
 
-    /** @var UserRepositoryInterface */
-    private $userRepository;
+    /** @var AdminUserRepositoryInterface */
+    private $adminUserRepository;
 
     /** @var UserPasswordEncoderInterface */
     private $encoder;
 
     /** @var string */
-    private $adminUsername;
+    private $username;
 
     /** @var string */
-    private $adminPassword;
-
-    /** @var int */
-    private $adminQuota;
+    private $password;
 
     /** @var DomainRepositoryInterface */
     private $domainRepository;
 
     public function __construct(
         DomainRepositoryInterface $domainRepository,
-        UserRepositoryInterface $userRepository,
+        AdminUserRepositoryInterface $adminUserRepository,
         UserPasswordEncoderInterface $encoder,
-        string $adminUsername,
-        string $adminPassword,
-        int $adminQuota,
+        string $username,
+        string $password,
         string $name = null
     ) {
         parent::__construct($name);
         $this->domainRepository = $domainRepository;
-        $this->userRepository = $userRepository;
+        $this->adminUserRepository = $adminUserRepository;
         $this->encoder = $encoder;
-        $this->adminUsername = $adminUsername;
-        $this->adminPassword = $adminPassword;
-        $this->adminQuota = $adminQuota;
+        $this->username = $username;
+        $this->password = $password;
     }
 
     protected function configure()
@@ -62,42 +56,26 @@ class CreateAdminCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $user = $this->userRepository->findOneBy([
-            'email' => $this->adminUsername,
+        $user = $this->adminUserRepository->findOneBy([
+            'username' => $this->username,
         ]);
 
-        $plainPassword = $this->adminPassword;
-        $password = '{BLF_CRYPT}'.password_hash($plainPassword, PASSWORD_BCRYPT);
 
-        if ($user instanceof VirtualUsers) {
-            $user->setPassword($password);
-            $user->setQuota($this->adminQuota);
-        }
-
-        if (!$user instanceof VirtualUsers) {
-            $user = new VirtualUsers(
+        if (!$user instanceof AdminUser) {
+            $user = new AdminUser(
                 Uuid::uuid4()->toString(),
-                $this->adminUsername,
-                $password,
-                $this->adminQuota
+                $this->username
             );
-
-            $domainElements = explode('@', $this->adminUsername);
-            $domainName = trim(end($domainElements));
-            $domain = $this->domainRepository->findOneBy([
-                'name' => $domainName,
-            ]);
-
-            if (!$domain instanceof VirtualDomains) {
-                throw new \InvalidArgumentException('Domain not found : '.$domain);
-            }
-
-            $user->setVirtualDomain($domain);
         }
 
-        $user->addRole('ROLE_ADMIN');
+        $plainPassword = $this->password;
+        $password = $this->encoder->encodePassword($user, $plainPassword);
 
-        $this->userRepository->save($user);
+        if ($user instanceof AdminUser) {
+            $user->setPassword($password);
+        }
+
+        $this->adminUserRepository->save($user);
 
         return 0;
     }

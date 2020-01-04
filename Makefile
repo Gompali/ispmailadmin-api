@@ -58,7 +58,6 @@ help:
 # Dependencies
 .PHONY: start-deps
 start-deps: ## (Docker) Start dependencies (for this project only)
-	- docker-machine start
 	@if [ -z ${DOCKER_DEPENDENCIES} ]; then \
 		echo 'No dependencies in .env file !!'; \
 		exit 1; \
@@ -71,6 +70,7 @@ stop-deps: ## (Docker) Stop dependencies (for this project only)
 
 # Project containers
 start-docker: ## (Docker) Start containers (for this project only)
+#	@docker-machine start 2>1
 	@${DOCKER_COMPOSE} up -d
 
 stop-docker: ## (Docker) Stop containers (for this project only)

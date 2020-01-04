@@ -21,11 +21,15 @@ class CreateDomainCommandHandler
 
     public function __invoke(CreateDomainCommand $command)
     {
-        $domain = new VirtualDomains(
-            Uuid::uuid4()->toString(),
-            $command->getDomain()
-        );
+        $domain = $this->domainRepository->findOneBy(['name' => $command->getDomain()]);
 
-        $this->domainRepository->save($domain);
+        if (!$domain instanceof VirtualDomains) {
+            $domain = new VirtualDomains(
+                Uuid::uuid4()->toString(),
+                $command->getDomain()
+            );
+
+            $this->domainRepository->save($domain);
+        }
     }
 }

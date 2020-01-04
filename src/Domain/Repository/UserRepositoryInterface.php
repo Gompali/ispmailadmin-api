@@ -18,5 +18,5 @@ interface UserRepositoryInterface
 
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
 
-    public function remove(string $email);
+    public function remove(VirtualUsers $user);
 }

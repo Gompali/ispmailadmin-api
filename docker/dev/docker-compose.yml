@@ -11,11 +11,12 @@ services:
     volumes:
       - "../../:/var/www/html:delegated"
       - "~/.composer:/home/dockeruser/.composer:cached"
-      - "cache_ispmailadmin-api:/var/www/html/var/cache:cached"
-      - "log_ispmailadmin-api:/var/www/html/var/log:cached"
+#      - "cache_ispmailadmin-api:/var/www/html/var/cache:cached"
+#      - "log_ispmailadmin-api:/var/www/html/var/log:cached"
       - './xdebug.ini:/usr/local/etc/php/docker-php-ext-xdebug.ini:rw'
     networks:
       - docker-env
+      - internal
     labels:
       - "traefik.frontend.rule=Host:ispmailadmin-api.ii.dev"
       - "traefik.port=8000"
@@ -33,20 +34,18 @@ services:
         idekey=PHPSTORM
 
   ispmailadmin-mysql:
-    image: mysql/mysql-server:5.7
+    build: ./mysql
     container_name: ispmailadmin-mysql
     networks:
-      - docker-env
+      - internal
     ports:
-    - 3306:3306
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
 
-volumes:
-  cache_ispmailadmin-api:
-  log_ispmailadmin-api:
-
 networks:
   docker-env:
     external: true
+  internal:
+    external: false

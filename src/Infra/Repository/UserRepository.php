@@ -23,12 +23,8 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         $em->flush();
     }
 
-    public function remove(string $email)
+    public function remove(VirtualUsers $user)
     {
-        $user = $this->findOneBy([
-            'email' => $email,
-        ]);
-
         $em = $this->getEntityManager();
         $em->remove($user);
         $em->flush();

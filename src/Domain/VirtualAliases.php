@@ -17,7 +17,7 @@ class VirtualAliases
     /** @var string */
     private $destination;
 
-    /** @var Collection */
+    /** @var VirtualDomains */
     private $domain;
 
     /**
@@ -61,17 +61,17 @@ class VirtualAliases
     }
 
     /**
-     * @return Collection
+     * @return VirtualDomains
      */
-    public function getDomain(): Collection
+    public function getDomain(): VirtualDomains
     {
         return $this->domain;
     }
 
     /**
-     * @param Collection $domain
+     * @param VirtualDomains $domain
      */
-    public function setDomain(Collection $domain): void
+    public function setDomain(VirtualDomains $domain): void
     {
         $this->domain = $domain;
     }
