@@ -188,3 +188,7 @@ fix: ## (PHP) Code style fixer
 .PHONY: stan
 stan: ## (PHP) Static Analysis
 	./vendor/bin/phpstan analyse src
+
+.PHONY: behat
+behat: ## (PHP) Behavior tests
+	./vendor/bin/behat --format=progress

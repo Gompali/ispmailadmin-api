@@ -1,0 +1,10 @@
+App\Domain\VirtualDomains:
+  alias1:
+    __construct:
+      - 76ae4282-8ea9-49b7-b804-7b125759ee69
+      - alias1@example.org
+      - test_user2@example.org
+
+#$this->id = $id;
+#$this->source = $source;
+#$this->destination = $destination;

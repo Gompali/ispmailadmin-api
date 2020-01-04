@@ -36,6 +36,23 @@ paths:
         '404':
           description: Resource Not Found
 
+  /domain:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Add a new domain
+      description: 'Create a new domain'
+      requestBody:
+        description: 'Add a new domain'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainObject'
+      responses:
+        '201':
+          description: Created
+
   /domain/{domain}:
     get:
       security:
@@ -50,8 +67,12 @@ paths:
             description: string representing domain name
             example: example.org
       responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullDomainObject'
     delete:
       security:
         - bearerAuth: []
@@ -283,6 +304,20 @@ components:
           type: integer
           description: quota in ko
           example: 1073456
+    DomainObject:
+      properties:
+        name:
+          type: string
+          example: exemple.org
+    FullDomainObject:
+      properties:
+        id:
+          type: string
+          example: acff16ec-ddc0-416c-ab48-641717b749b1
+        name:
+          type: string
+          example: exemple.org
+
     PatchUSerObject:
       type: object
       properties:

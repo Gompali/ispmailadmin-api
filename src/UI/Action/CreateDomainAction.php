@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Action;
 
 use App\App\Command\CreateDomainCommand;
+use App\Common\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -19,8 +20,18 @@ class CreateDomainAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(Request $request, string $domain): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
+        $requestContent = json_decode((string) $request->getContent(), true);
+        if(null === $requestContent){
+            throw new BadRequestException('Invalid Json');
+        }
+
+        if(!array_key_exists('domain', $requestContent)){
+            throw new BadRequestException('Parameter domain is missing');
+        }
+
+        $domain = $requestContent['domain'];
         $this->commandBus->dispatch(new CreateDomainCommand(trim($domain)));
 
         return new JsonResponse(null, 201);
