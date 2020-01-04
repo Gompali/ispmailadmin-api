@@ -37,9 +37,13 @@
         ADMIN_PASSWORD='api-admin-user-password'
         ADMIN_USERNAME='api-admin-username'
                 
+        // Generate keys for JWT Token
+        $ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+        $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout                
+     
+                
      3. Generate model :
      
-        // At the root of the project run :
         $ bin/console d:d:m
         $ bin/console create:admin
         
@@ -64,6 +68,6 @@
         }
 
      
-     - the application will return a Bearer token (a long string known as JWT Token)
+     - if login succeed the api will return a Bearer token (a long string known as JWT Token)
      
      - use this JWT Token (expires after 1 hour) in authorization header and prefix "Bearer "
