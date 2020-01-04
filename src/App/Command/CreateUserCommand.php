@@ -8,6 +8,7 @@ use App\Domain\DTO\UserDTO;
 
 class CreateUserCommand
 {
+    /** @var array<mixed> */
     private $payload = [];
 
     public function __construct(UserDTO $userDTO, string $id)

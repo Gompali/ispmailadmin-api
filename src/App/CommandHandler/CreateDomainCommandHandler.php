@@ -19,7 +19,7 @@ class CreateDomainCommandHandler
         $this->domainRepository = $domainRepository;
     }
 
-    public function __invoke(CreateDomainCommand $command)
+    public function __invoke(CreateDomainCommand $command): void
     {
         $domain = $this->domainRepository->findOneBy(['name' => $command->getDomain()]);
 

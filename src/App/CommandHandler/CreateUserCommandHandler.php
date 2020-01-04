@@ -27,7 +27,7 @@ class CreateUserCommandHandler
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(CreateUserCommand $command)
+    public function __invoke(CreateUserCommand $command): void
     {
         $user = new VirtualUsers(
             $command->getId(),

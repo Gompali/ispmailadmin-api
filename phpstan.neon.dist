@@ -1,0 +1,11 @@
+#includes:
+#    - %rootDir%/../phpstan/phpstan-doctrine/extension.neon
+
+parameters:
+    level: 7
+    paths:
+        - %rootDir%/../../config
+        - %rootDir%/../../features
+        - %rootDir%/../../public
+        - %rootDir%/../../src
+        - %rootDir%/../../translations

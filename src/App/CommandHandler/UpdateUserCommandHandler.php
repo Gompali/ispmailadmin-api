@@ -22,7 +22,7 @@ class UpdateUserCommandHandler
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(UpdateUserCommand $command)
+    public function __invoke(UpdateUserCommand $command): void
     {
         $dbUser = $this->userRepository->findOneBy([
             'email' => $command->getEmail(), ]

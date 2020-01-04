@@ -17,7 +17,7 @@ class AdminUser implements UserInterface
     /** @var string */
     private $password;
 
-    /** @var array */
+    /** @var array<string> */
     private $roles;
 
     public function __construct(
@@ -37,7 +37,7 @@ class AdminUser implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -45,7 +45,7 @@ class AdminUser implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -53,7 +53,7 @@ class AdminUser implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -61,7 +61,7 @@ class AdminUser implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -69,7 +69,7 @@ class AdminUser implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 

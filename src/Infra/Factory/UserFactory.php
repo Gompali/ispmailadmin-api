@@ -9,7 +9,7 @@ use App\Domain\VirtualUsers;
 
 class UserFactory
 {
-    public static function createDTO(VirtualUsers $user)
+    public static function createDTO(VirtualUsers $user): UserDTO
     {
         $dto = new UserDTO();
         $dto->email = $user->getEmail();

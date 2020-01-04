@@ -20,7 +20,7 @@ class DeleteUserAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(Request $request, string $email)
+    public function __invoke(Request $request, string $email): JsonResponse
     {
         $this->commandBus->dispatch(new DeleteUserCommand($email));
 

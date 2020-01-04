@@ -32,7 +32,7 @@ class GetUserByEmailAction
         $this->normalizer = $normalizer;
     }
 
-    public function __invoke(Request $request, string $email)
+    public function __invoke(Request $request, string $email): JsonResponse
     {
         $envelope = $this->queryBus->dispatch(new GetUserByEmailQuery($email));
         $user = $this->handle($envelope);

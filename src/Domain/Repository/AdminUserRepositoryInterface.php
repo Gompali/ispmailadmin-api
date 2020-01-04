@@ -10,5 +10,5 @@ interface AdminUserRepositoryInterface
 
     public function findOneBy(array $criteria, array $orderBy = null);
 
-    public function save(AdminUser $adminUser);
+    public function save(AdminUser $adminUser):void;
 }

@@ -19,7 +19,7 @@ class CreateDomainAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(Request $request, string $domain)
+    public function __invoke(Request $request, string $domain): JsonResponse
     {
         $this->commandBus->dispatch(new CreateDomainCommand(trim($domain)));
 

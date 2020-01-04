@@ -30,7 +30,7 @@ class CreateAliasCommandHandler
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(CreateAliasCommand $command)
+    public function __invoke(CreateAliasCommand $command): void
     {
         $destinationUser = $this->userRepository->findOneBy(['email' => $command->getDestination()]);
         /** @var VirtualUsers $destinationUser */

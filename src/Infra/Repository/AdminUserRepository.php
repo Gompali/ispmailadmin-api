@@ -16,7 +16,7 @@ class AdminUserRepository extends ServiceEntityRepository implements AdminUserRe
         parent::__construct($registry, AdminUser::class);
     }
 
-    public function save(AdminUser $adminUser)
+    public function save(AdminUser $adminUser): void
     {
         $em = $this->getEntityManager();
         $em->persist($adminUser);

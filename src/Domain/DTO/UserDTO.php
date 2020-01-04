@@ -15,7 +15,9 @@ class UserDTO
     /** @var int */
     public $quota;
 
-    public function toArray()
+
+    /** @return array<mixed> */
+    public function toArray(): array
     {
         $email = $this->email ?? '@';
         $elements = explode('@', $email);
@@ -25,7 +27,7 @@ class UserDTO
             'email' => $this->email,
             'password' => $this->password,
             'quota' => $this->quota,
-            'domain' => trim($domain) ?? null,
+            'domain' => trim((string) $domain) ?? null,
         ];
     }
 }

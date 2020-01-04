@@ -23,14 +23,14 @@ class EmailUniqueConstraintValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         $user = $this->UserRepository->findOneBy([
             'email' => $value,
         ]);
 
         if ($user instanceof VirtualUsers) {
-            /* @var EmailUniqueConstraint $constraint */
+            /* @var EmailUniqueConstraintInterface $constraint */
             $this->context->buildViolation($constraint->getMessage())
                 ->setParameter('{{ email }}', $value)
                 ->addViolation();

@@ -97,7 +97,7 @@ class VirtualUsers
     }
 
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }

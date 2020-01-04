@@ -20,9 +20,9 @@ class CreateAliasAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
-        $parameters = json_decode($request->getContent(), true);
+        $parameters = json_decode((string) $request->getContent(), true);
 
         if (!isset($parameters['source'])) {
             throw new BadRequestException('source alias is missing in request');

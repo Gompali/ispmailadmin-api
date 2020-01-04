@@ -29,11 +29,11 @@ class CreateUserAction
         $this->formFactory = $formFactory;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $form = $this->formFactory->create(UserType::class);
 
-        $requestData = json_decode($request->getContent(), true);
+        $requestData = json_decode((string) $request->getContent(), true);
 
         if (null === $requestData) {
             throw new \JsonException('The Json sent for your request is Invalid');

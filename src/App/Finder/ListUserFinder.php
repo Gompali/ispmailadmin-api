@@ -6,6 +6,8 @@ namespace App\App\Finder;
 
 use App\App\Query\ListUserQuery;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\VirtualUsers;
+use Doctrine\Common\Collections\Collection;
 
 class ListUserFinder
 {
@@ -19,12 +21,17 @@ class ListUserFinder
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(ListUserQuery $query)
+
+    /**
+     * @param ListUserQuery $query
+     * @return Collection<VirtualUsers>|null
+     */
+    public function __invoke(ListUserQuery $query): ?Collection
     {
-        if ($query instanceof ListUserQuery) {
-            return $this->userRepository->findAll();
+        if (!$query instanceof ListUserQuery) {
+            throw new \LogicException('Invalid query');
         }
 
-        return;
+        return $this->userRepository->findAll();
     }
 }
