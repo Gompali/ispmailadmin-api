@@ -38,11 +38,13 @@ class UserType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new EmailUniqueConstraint(),
+                    new Assert\NotBlank()
                 ],
             ])
             ->add('password', PasswordType::class, [
                     'required' => true,
                     'constraints' => [
+                        new Assert\NotBlank(),
                         new Assert\Length([
                             'min' => 12,
                             'max' => 255,
