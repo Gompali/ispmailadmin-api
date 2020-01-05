@@ -50,11 +50,13 @@ class CreateTokenAction
             'username' => $username,
         ]);
 
+
         if (!$user instanceof AdminUser) {
             throw new AuthenticationException('Invalid Credentials', 401);
         }
 
         $match = $this->passwordEncoder->isPasswordValid($user, $data['password']);
+
 
         if (!$match) {
             throw new AuthenticationException('Invalid Credentials', 401);

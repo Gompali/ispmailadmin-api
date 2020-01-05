@@ -5,13 +5,18 @@ declare(strict_types=1);
 
 namespace App\UI\Action;
 
+
 use App\App\Query\ListAliasesQuery;
+use App\App\Query\ListDomainQuery;
+use App\Common\Infra\Messenger\HandleTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class ListAliasesAction
+class ListDomainAction
 {
+    use HandleTrait;
+
     /** @var MessageBusInterface */
     private $queryBus;
 
@@ -28,7 +33,7 @@ class ListAliasesAction
 
     public function __invoke()
     {
-        $envelope = $this->queryBus->dispatch(new ListAliasesQuery());
+        $envelope = $this->queryBus->dispatch(new ListDomainQuery());
         $results = $this->handle($envelope);
         $normalizedResults = $this->normalizer->normalize($results);
 
