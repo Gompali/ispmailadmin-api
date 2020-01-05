@@ -4,28 +4,20 @@ declare(strict_types=1);
 
 namespace App\App\Command;
 
-use App\Domain\DTO\UserDTO;
+use App\Domain\DTO\UpdateUserDTO;
 
 class UpdateUserCommand
 {
     /** @var array<mixed> */
     private $payload = [];
 
-    public function __construct(UserDTO $userDTO, string $email)
+    public function __construct(UpdateUserDTO $userDTO, string $username)
     {
         $this->payload = array_merge(
             $userDTO->toArray(), [
-                'email' => $email,
+                'username' => $username,
             ]
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->payload['email'];
     }
 
     /**
@@ -50,5 +42,13 @@ class UpdateUserCommand
     public function getDomain(): string
     {
         return $this->payload['domain'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->payload['username'];
     }
 }

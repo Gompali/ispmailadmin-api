@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Builder;
 
 use App\Domain\AdminUser;
+use App\Domain\DTO\UpdateUserDTO;
 use App\Domain\DTO\UserDTO;
 use App\Domain\Builder\AdminUserBuilderInterface;
 use App\Domain\VirtualUsers;
@@ -40,6 +41,14 @@ class AdminUserBuilder implements AdminUserBuilderInterface
     public static function createDTO(VirtualUsers $user): UserDTO
     {
         $dto = new UserDTO();
+        $dto->email = $user->getEmail();
+        $dto->quota = $user->getQuota();
+        return $dto;
+    }
+
+    public static function createUpdateDTO(VirtualUsers $user): UpdateUserDTO
+    {
+        $dto = new UpdateUserDTO();
         $dto->email = $user->getEmail();
         $dto->quota = $user->getQuota();
         return $dto;

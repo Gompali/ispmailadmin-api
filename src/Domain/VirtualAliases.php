@@ -17,7 +17,7 @@ class VirtualAliases
     /** @var string */
     private $destination;
 
-    /** @var VirtualDomains */
+    /** @var VirtualDomains|null */
     private $domain;
 
     /**
@@ -61,9 +61,9 @@ class VirtualAliases
     }
 
     /**
-     * @return VirtualDomains
+     * @return VirtualDomains|null
      */
-    public function getDomain(): VirtualDomains
+    public function getDomain(): ?VirtualDomains
     {
         return $this->domain;
     }

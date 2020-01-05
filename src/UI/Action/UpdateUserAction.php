@@ -7,6 +7,7 @@ namespace App\UI\Action;
 use App\App\Command\UpdateUserCommand;
 use App\Common\Exception\BadRequestException;
 use App\Common\Infra\Messenger\HandleTrait;
+use App\UI\Form\UpdateUserType;
 use App\UI\Form\UserType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,7 +40,7 @@ class UpdateUserAction
 
     public function __invoke(Request $request, string $email): JsonResponse
     {
-        $form = $this->formFactory->create(UserType::class);
+        $form = $this->formFactory->create(UpdateUserType::class);
         $requestData = json_decode((string) $request->getContent(), true);
 
         if (null === $requestData) {
