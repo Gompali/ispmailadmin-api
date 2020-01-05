@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\App\CommandHandler;
 
 use App\App\Command\CreateAliasCommand;
+use App\Common\Exception\BadRequestException;
 use App\Domain\Repository\AliasRepositoryInterface;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\VirtualAliases;
@@ -13,13 +14,10 @@ use Ramsey\Uuid\Uuid;
 
 class CreateAliasCommandHandler
 {
-    /**
-     * @var AliasRepositoryInterface
-     */
+    /** @var AliasRepositoryInterface */
     private $aliasRepository;
-    /**
-     * @var UserRepositoryInterface
-     */
+
+    /** @var UserRepositoryInterface */
     private $userRepository;
 
     public function __construct(
@@ -33,6 +31,11 @@ class CreateAliasCommandHandler
     public function __invoke(CreateAliasCommand $command): void
     {
         $destinationUser = $this->userRepository->findOneBy(['email' => $command->getDestination()]);
+
+        if(!$destinationUser instanceof VirtualUsers){
+            throw new BadRequestException('Destination of alias does not exist');
+        }
+
         /** @var VirtualUsers $destinationUser */
         $domain = $destinationUser->getVirtualDomain();
 

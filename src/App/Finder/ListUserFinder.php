@@ -24,9 +24,9 @@ class ListUserFinder
 
     /**
      * @param ListUserQuery $query
-     * @return Collection<VirtualUsers>|null
+     * @return array
      */
-    public function __invoke(ListUserQuery $query): ?Collection
+    public function __invoke(ListUserQuery $query): array
     {
         if (!$query instanceof ListUserQuery) {
             throw new \LogicException('Invalid query');
