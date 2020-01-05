@@ -57,7 +57,7 @@ paths:
     get:
       security:
         - bearerAuth: []
-      summary: Add a new domain
+      summary: Get a domain information
       parameters:
           - in: path
             name: domain
@@ -215,12 +215,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AliasObject'
+              $ref: '#/components/schemas/PostAliasObject'
       responses:
         '200':
           description: OK
         '400':
           description: Bad Request
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get list of aliases
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AliasListObject'
+
 
   /alias/source/{source}/destination/{destination}:
     delete:
@@ -252,7 +264,31 @@ components:
       scheme: bearer
       bearerFormat: JWT    # optional, arbitrary value for documentation purposes
   schemas:
+    AliasListObject:
+      type: array
+      items:
+        $ref: '#/components/schemas/AliasObject'
     AliasObject:
+      type: object
+      required:
+        - source
+        - destination
+      properties:
+        source:
+          type: string
+          description: source@exemple.org
+        destination:
+          type: string
+          description: destination@exemple.org
+        id:
+          type: string
+          description: unique identifier uuid4
+          example: 1f6e955a-234e-45b8-beaf-329107d0c0fa
+        domain:
+          type: string
+          description: domain name
+          example: example.orig
+    PostAliasObject:
       type: object
       required:
         - source
@@ -317,7 +353,6 @@ components:
         name:
           type: string
           example: exemple.org
-
     PatchUSerObject:
       type: object
       properties:

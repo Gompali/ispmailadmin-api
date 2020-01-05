@@ -74,4 +74,4 @@
 
 ## Update Swagger
 
-    docker run -i yousan/swagger-yaml-to-html < petstore.yaml > petstore.html
+    docker run -i yousan/swagger-yaml-to-html < swagger.yaml > swagger.html

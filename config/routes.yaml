@@ -53,6 +53,11 @@ patch_user:
   controller: App\UI\Action\PatchUserAction
 
 # alias
+list_alias:
+  path: /alias
+  methods: GET
+  controller: App\UI\Action\ListAliasesAction
+
 create_alias:
   path: /alias
   methods: POST
