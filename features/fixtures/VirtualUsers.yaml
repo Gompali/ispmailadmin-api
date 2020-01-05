@@ -5,15 +5,21 @@ App\Domain\VirtualUsers:
       - test_user1@example.org
       - supersecurePassword
       - 1000000
+    __calls:
+      - setVirtualDomain: ['@domain1']
   user2:
     __construct:
       - 220dafd5-ff73-442c-bcbb-33a8d6cb2012
       - test_user2@example.org
       - superUnsecurePassword
       - 1000000
+    __calls:
+      - setVirtualDomain: ['@domain1']
   user_short_password:
     __construct:
       - 31ee80c4-0a2c-4392-aa16-7d78ef199628
       - test_user3@example.org
       - super
       - 2000000
+    __calls:
+      - setVirtualDomain: ['@domain1']

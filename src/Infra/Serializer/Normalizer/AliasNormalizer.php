@@ -16,6 +16,16 @@ class AliasNormalizer implements SerializerAwareInterface, NormalizerInterface
     use SerializerAwareTrait;
 
     /**
+     * @var DomainNormalizer
+     */
+    private $domainNormalizer;
+
+    public function __construct(DomainNormalizer $domainNormalizer)
+    {
+        $this->domainNormalizer = $domainNormalizer;
+    }
+
+    /**
      * @inheritDoc
      */
     public function normalize($object, $format = null, array $context = [])
@@ -25,7 +35,7 @@ class AliasNormalizer implements SerializerAwareInterface, NormalizerInterface
             'id' => $object->getId(),
             'source' => $object->getSource(),
             'destination' => $object->getDestination(),
-            'domain' => $object->getDomain()
+            'domain' => $object->getDomain()->getName()
         ];
     }
 

@@ -29,11 +29,9 @@ class PatchUserCommandHandler
     {
         /** @var VirtualUsers $dbUser */
         $dbUser = $this->userRepository->find($command->getId());
-        $hasChange = false;
 
         if ($command->getQuota() !== $dbUser->getQuota()) {
             $dbUser->setQuota($command->getQuota());
-            $hasChange = true;
         }
 
         if ($command->getPassword()) {
@@ -47,8 +45,6 @@ class PatchUserCommandHandler
             }
         }
 
-        if ($hasChange) {
-            $this->userRepository->save($dbUser);
-        }
+        $this->userRepository->save($dbUser);
     }
 }

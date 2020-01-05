@@ -35,7 +35,7 @@ class ListDomainAction
     {
         $envelope = $this->queryBus->dispatch(new ListDomainQuery());
         $results = $this->handle($envelope);
-        $normalizedResults = $this->normalizer->normalize($results);
+        $normalizedResults = $this->normalizer->normalize($results, 'json');
 
         return new JsonResponse($normalizedResults, 200);
     }

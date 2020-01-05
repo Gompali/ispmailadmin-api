@@ -33,7 +33,7 @@ class ListUserAction
     {
         $envelope = $this->queryBus->dispatch(new ListUserQuery());
         $results = $this->handle($envelope);
-        $normalizedResults = $this->normalizer->normalize($results);
+        $normalizedResults = $this->normalizer->normalize($results, 'json');
         return new JsonResponse($normalizedResults, 200);
     }
 }

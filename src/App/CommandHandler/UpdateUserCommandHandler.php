@@ -25,7 +25,7 @@ class UpdateUserCommandHandler
     public function __invoke(UpdateUserCommand $command): void
     {
         $dbUser = $this->userRepository->findOneBy([
-            'email' => $command->getEmail(), ]
+            'email' => $command->getUsername(), ]
         );
 
         if (!$dbUser instanceof VirtualUsers) {
