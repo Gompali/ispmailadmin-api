@@ -1,4 +1,4 @@
-@post_domain
+@create_domain
 Feature: Load user yaml file and populate database, then generate JWT to post a new domain
 
   Background:
