@@ -1,9 +1,9 @@
 App\Domain\AdminUser:
-  admin:
-    __construct:
-      - 9a9179f7-1d92-4159-a2a4-e9cbbdf87767
-      - administrator
-
-
-#string $id,
-#string $username
+  admin1:
+    id: 9a9179f7-1d92-4159-a2a4-e9cbbdf87767
+    username: admin1
+    password: test
+  admin2:
+    id: 19b811ed-c55a-4a92-acd8-85574e35ed52
+    username: admin2
+    password: test

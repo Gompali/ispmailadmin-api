@@ -11,6 +11,11 @@ get_token:
   controller: App\UI\Action\CreateTokenAction
 
 #domain
+list_domain:
+  path: /domain
+  methods: GET
+  controller: App\UI\Action\ListDomainAction
+
 create_domain:
   path: /domain
   methods: POST
@@ -53,6 +58,11 @@ patch_user:
   controller: App\UI\Action\PatchUserAction
 
 # alias
+list_alias:
+  path: /alias
+  methods: GET
+  controller: App\UI\Action\ListAliasesAction
+
 create_alias:
   path: /alias
   methods: POST

@@ -16,15 +16,6 @@ else
 	export GID = $(shell id -g)
 endif
 
-ifeq ($(CI),true)
-	BEHAT_FLAGS := -p ci
-else
-	ifeq ($(FORCE_LOCAL),true)
-		BEHAT_FLAGS := -p local
-	else
-		BEHAT_FLAGS :=
-	endif
-endif
 
 APP_IMAGE_NAME?=ispmailadmin-api
 APP_IMAGE_TAG?=latest
@@ -58,7 +49,6 @@ help:
 # Dependencies
 .PHONY: start-deps
 start-deps: ## (Docker) Start dependencies (for this project only)
-	docker-machine start
 	@if [ -z ${DOCKER_DEPENDENCIES} ]; then \
 		echo 'No dependencies in .env file !!'; \
 		exit 1; \
@@ -79,7 +69,7 @@ stop-docker: ## (Docker) Stop containers (for this project only)
 
 # All
 .PHONY: start
-start: start-docker ## (Docker) Start : dependencies and containers (for this project only)
+start: start-deps start-docker ## (Docker) Start : dependencies and containers (for this project only)
 
 .PHONY: stop
 stop:  stop-deps stop-docker ## (Docker) Stop : dependencies and containers (for this project only)
@@ -106,9 +96,6 @@ ps: ## (Docker) Show containers (for this project only)
 unit: ## (PHP) Unit tests
 	$(RUN_IN_CONTAINER) ./vendor/bin/phpunit --bootstrap vendor/autoload.php
 
-.PHONY: behat
-behat: vendor ## (PHP) Behavior tests
-	$(RUN_IN_CONTAINER) $(MAKE) $@ $(BEHAT_FLAGS)
 
 .PHONY: build
 build: ## (Docker) Start dependencies (for this project only)
@@ -188,7 +175,3 @@ fix: ## (PHP) Code style fixer
 .PHONY: stan
 stan: ## (PHP) Static Analysis
 	./vendor/bin/phpstan analyse src
-
-.PHONY: behat
-behat: ## (PHP) Behavior tests
-	./vendor/bin/behat --format=progress
