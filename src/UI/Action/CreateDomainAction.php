@@ -27,11 +27,11 @@ class CreateDomainAction
             throw new BadRequestException('Invalid Json');
         }
 
-        if(!array_key_exists('domain', $requestContent)){
+        if(!array_key_exists('name', $requestContent)){
             throw new BadRequestException('Parameter domain is missing');
         }
 
-        $domain = $requestContent['domain'];
+        $domain = $requestContent['name'];
         $this->commandBus->dispatch(new CreateDomainCommand(trim($domain)));
 
         return new JsonResponse(null, 201);
