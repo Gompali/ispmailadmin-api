@@ -8,6 +8,8 @@ interface AliasRepositoryInterface
 {
     public function findOneBy(array $criteria, array $orderBy = null);
 
+    public function findAll();
+
     public function remove(VirtualAliases $alias): void;
 
     public function save(VirtualAliases $alias): void;
