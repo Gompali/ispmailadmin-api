@@ -27,7 +27,7 @@ delete_domain:
   controller: App\UI\Action\DeleteDomainAction
 
 # users
-all_user:
+list_users:
   path: /users
   methods: GET
   controller: App\UI\Action\ListUserAction
