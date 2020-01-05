@@ -9,7 +9,7 @@ namespace App\App\Finder;
 use App\App\Query\ListAliasesQuery;
 use App\Domain\Repository\AliasRepositoryInterface;
 
-class ListAliasesQueryFinder
+class ListAliasesFinder
 {
     /** @var AliasRepositoryInterface */
     private $aliasRepository;

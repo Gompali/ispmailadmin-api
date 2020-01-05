@@ -37,6 +37,17 @@ paths:
           description: Resource Not Found
 
   /domain:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get list of domains
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainListObject'
     post:
       security:
         - bearerAuth: []
@@ -264,6 +275,10 @@ components:
       scheme: bearer
       bearerFormat: JWT    # optional, arbitrary value for documentation purposes
   schemas:
+    DomainListObject:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullDomainObject'
     AliasListObject:
       type: array
       items:

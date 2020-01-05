@@ -1,0 +1,35 @@
+default:
+    suites:
+        default:
+            paths: [ "%paths.base%/features" ]
+            contexts:
+                - behatch:context:rest
+                - behatch:context:browser
+                - behatch:context:debug
+                - behatch:context:system
+                - behatch:context:json
+                - behatch:context:table
+                - behatch:context:xml
+                - Behat\MinkExtension\Context\MinkContext
+                - AuthenticationContext:
+                    JWTTokenManager: '@lexik_jwt_authentication.jwt_manager'
+                    entityManager: '@Doctrine\ORM\EntityManagerInterface'
+                - DoctrineContext:
+                    entityManager: '@Doctrine\ORM\EntityManagerInterface'
+                - FixtureContext:
+                    entityManager: '@Doctrine\ORM\EntityManagerInterface'
+                    loader: '@fidry_alice_data_fixtures.loader.doctrine'
+                    yamlFileLoader: '@App\Infra\Services\Config\YamlFileContentLoaderInterface'
+                    adminUserBuilder: '@App\Domain\Builder\AdminUserBuilderInterface'
+
+
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: features/bootstrap/bootstrap.php
+                class: App\Kernel
+        Behat\MinkExtension:
+                    sessions:
+                        default:
+                            symfony2: ~
+        Behatch\Extension: ~

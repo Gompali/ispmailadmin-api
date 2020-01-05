@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Console;
 
 use App\Domain\AdminUser;
+use App\Domain\Builder\AdminUserBuilderInterface;
 use App\Domain\Repository\AdminUserRepositoryInterface;
 use App\Domain\Repository\DomainRepositoryInterface;
 use Ramsey\Uuid\Uuid;
@@ -21,30 +22,26 @@ class CreateAdminCommand extends Command
     /** @var AdminUserRepositoryInterface */
     private $adminUserRepository;
 
-    /** @var UserPasswordEncoderInterface */
-    private $encoder;
-
     /** @var string */
     private $username;
 
     /** @var string */
     private $password;
 
-    /** @var DomainRepositoryInterface */
-    private $domainRepository;
+    /** @var AdminUserBuilderInterface */
+    private $adminUserBuilder;
+
 
     public function __construct(
-        DomainRepositoryInterface $domainRepository,
+        AdminUserBuilderInterface $adminUserBuilder,
         AdminUserRepositoryInterface $adminUserRepository,
-        UserPasswordEncoderInterface $encoder,
         string $username,
         string $password,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->domainRepository = $domainRepository;
+        $this->adminUserBuilder = $adminUserBuilder;
         $this->adminUserRepository = $adminUserRepository;
-        $this->encoder = $encoder;
         $this->username = $username;
         $this->password = $password;
     }
@@ -60,19 +57,12 @@ class CreateAdminCommand extends Command
             'username' => $this->username,
         ]);
 
-
         if (!$user instanceof AdminUser) {
-            $user = new AdminUser(
+            $user = $this->adminUserBuilder->createFromCredentials(
                 Uuid::uuid4()->toString(),
-                $this->username
+                $this->username,
+                $this->password
             );
-        }
-
-        $plainPassword = $this->password;
-        $password = $this->encoder->encodePassword($user, $plainPassword);
-
-        if ($user instanceof AdminUser) {
-            $user->setPassword($password);
         }
 
         $this->adminUserRepository->save($user);

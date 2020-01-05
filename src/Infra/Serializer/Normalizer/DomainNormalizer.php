@@ -6,12 +6,16 @@ declare(strict_types=1);
 namespace App\Infra\Serializer\Normalizer;
 
 
-use App\Domain\VirtualAliases;
+use App\Domain\VirtualDomains;
+use Symfony\Component\Serializer\Exception\CircularReferenceException;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Exception\LogicException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;
 
-class AliasNormalizer implements SerializerAwareInterface, NormalizerInterface
+class DomainNormalizer implements SerializerAwareInterface, NormalizerInterface
 {
     use SerializerAwareTrait;
 
@@ -20,12 +24,10 @@ class AliasNormalizer implements SerializerAwareInterface, NormalizerInterface
      */
     public function normalize($object, $format = null, array $context = [])
     {
-        /** @var VirtualAliases $object */
+        /** @var VirtualDomains $object */
         return [
             'id' => $object->getId(),
-            'source' => $object->getSource(),
-            'destination' => $object->getDestination(),
-            'domain' => $object->getDomain()
+            'name' => $object->getName()
         ];
     }
 
@@ -34,6 +36,6 @@ class AliasNormalizer implements SerializerAwareInterface, NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return ($data instanceof VirtualAliases) && $format === 'json';
+       return ($data instanceof VirtualDomains) && $format === 'json';
     }
 }

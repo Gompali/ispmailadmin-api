@@ -1,0 +1,59 @@
+services:
+    _defaults:
+        public: true
+
+    # If you need to access services in a test, create an alias
+    # and then fetch that alias from the container. As a convention,
+    # aliases are prefixed with test. For example:
+    #
+    # test.App\Service\MyService: '@App\Service\MyService'
+#
+#    App\Tests\Mock\:
+#        resource: '../tests/Mock/*'
+
+    Symfony\Component\Cache\Adapter\FilesystemAdapter: ~
+    Symfony\Component\Cache\Adapter\AdapterInterface: '@Symfony\Component\Cache\Adapter\FilesystemAdapter'
+
+    App\Infra\Services\Config\YamlFileContentLoaderInterface:
+        class: App\Infra\Services\Config\YamlFileContentLoader
+        arguments:
+            $fileLocator: '@file_locator'
+
+    App\Domain\Builder\AdminUserBuilderInterface:
+        class: App\Infra\Builder\AdminUserBuilder
+        arguments:
+            $encoder: '@security.user_password_encoder.generic'
+
+#    App\Common\Domain\HttpClient\Guzzle\GetUserClientInterface: '@App\Tests\Mock\GetUserClient'
+#    App\Common\Domain\HttpClient\Guzzle\GetFlightClientInterface: '@App\Tests\Mock\GetFlightClient'
+#    App\Common\Domain\HttpClient\Guzzle\GetAirportClientInterface: '@App\Tests\Mock\GetAirportClient'
+#
+#    App\Claim\Domain\Repository\AirportRepositoryInterface:
+#        class: App\Tests\Mock\AirportRepository
+#        arguments:
+#            $fixtureDirectory: '%kernel.project_dir%/features/fixtures/yml/mockedDatas'
+#            $cacheRepository: '@app.airport_cache_repository'
+#
+#    App\Common\Domain\Repository\DocumentRepositoryInterface:
+#        class: App\Tests\Mock\DocumentRepository
+#        arguments:
+#            $fixtureDirectory: '%kernel.project_dir%/features/fixtures/yml/mockedDatas'
+#            $cacheRepository: '@app.document_cache_repository'
+#
+#
+#    test.app.symfony_finder:
+#        class: Symfony\Component\Finder\Finder
+#
+#    test.app.symfony_filesystem:
+#        class: Symfony\Component\Filesystem\Filesystem
+#
+#    test.app.claim.repository:
+#        class: 'App\Claim\Infra\Repository\DoctrineORM\ClaimRepository'
+#        arguments:
+#            - '@doctrine'
+#
+#    test.app.notification.repository:
+#        class: 'App\Claim\Infra\Repository\DoctrineORM\NotificationRepository'
+#        arguments:
+#            - '@doctrine'
+#

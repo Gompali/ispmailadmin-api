@@ -35,14 +35,12 @@ services:
 
     App\UI\Console\CreateAdminCommand:
         arguments:
-            $domainRepository: '@App\Domain\Repository\DomainRepositoryInterface'
+            $adminUserBuilder: '@App\Domain\Builder\AdminUserBuilderInterface'
             $adminUserRepository: '@App\Domain\Repository\AdminUserRepositoryInterface'
-            $encoder: '@security.user_password_encoder.generic'
             $username: "%env(ADMIN_USERNAME)%"
             $password: "%env(ADMIN_PASSWORD)%"
         tags:
             - {name: 'console.command'}
-
 
     App\Common\EventListener\ExceptionListener:
         arguments:
