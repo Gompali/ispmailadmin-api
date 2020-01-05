@@ -23,7 +23,6 @@ class ListAliasesFinder
         if($query === null){
             throw new \LogicException('Empty query');
         }
-
         return $this->aliasRepository->findAll();
     }
 }

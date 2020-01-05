@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\App\Command;
 
+use App\Domain\DTO\UpdateUserDTO;
 use App\Domain\DTO\UserDTO;
 
 class PatchUserCommand
@@ -11,7 +12,7 @@ class PatchUserCommand
     /** @var array<mixed> */
     private $payload = [];
 
-    public function __construct(UserDTO $DTO, string $id)
+    public function __construct(UpdateUserDTO $DTO, string $id)
     {
         $this->payload = array_merge($DTO->toArray(), ['id' => $id]);
     }
@@ -33,6 +34,6 @@ class PatchUserCommand
 
     public function getQuota(): ?int
     {
-        return $this->payload['quota'];
+        return (int) $this->payload['quota'];
     }
 }

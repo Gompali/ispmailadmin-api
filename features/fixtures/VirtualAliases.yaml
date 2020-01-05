@@ -1,9 +1,18 @@
-App\Domain\VirtualDomains:
+App\Domain\VirtualAliases:
   alias1:
     __construct:
       - 76ae4282-8ea9-49b7-b804-7b125759ee69
       - alias1@example.org
       - test_user2@example.org
+    __calls:
+      - setDomain: ['@domain1']
+  alias2:
+    __construct:
+      - b1cc6885-d29f-49f0-8130-c5b4200a5500
+      - alias2@example.org
+      - test_user2@example.org
+    __calls:
+      - setDomain: ['@domain1']
 
 #$this->id = $id;
 #$this->source = $source;

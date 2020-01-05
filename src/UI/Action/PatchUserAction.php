@@ -8,7 +8,9 @@ use App\App\Command\PatchUserCommand;
 use App\Common\Exception\BadRequestException;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\VirtualUsers;
+use App\Infra\Builder\AdminUserBuilder;
 use App\Infra\Builder\AdminUserFactory;
+use App\UI\Form\UpdateUserType;
 use App\UI\Form\UserType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -51,8 +53,8 @@ class PatchUserAction
             throw new BadRequestException('User not found');
         }
 
-        $dto = AdminUserFactory::createDTO($user);
-        $form = $this->formFactory->create(UserType::class, $dto);
+        $dto = AdminUserBuilder::createUpdateDTO($user);
+        $form = $this->formFactory->create(UpdateUserType::class, $dto);
         $clearMissing = 'PATCH' != $request->getMethod();
         $form->submit($requestContent, $clearMissing);
 
