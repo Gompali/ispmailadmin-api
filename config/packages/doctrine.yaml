@@ -7,7 +7,7 @@ doctrine:
         host:       localhost
         port:       3306
         user:       mailadmin
-        password:   'env(%MAILADMIN_PASSWORD%)'
+        password:   '%env(resolve:MAILADMIN_PASSWORD)%'
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
