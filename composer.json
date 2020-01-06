@@ -27,8 +27,7 @@
     "symfony/translation": "^4.4.0",
     "symfony/twig-bundle": "^4.4.0",
     "symfony/validator": "^4.4.0",
-    "symfony/yaml": "^4.4.0",
-    "theofidry/alice-data-fixtures": "^1.0@dev"
+    "symfony/yaml": "^4.4.0"
   },
   "require-dev": {
     "behat/behat": "^3.5@dev",
@@ -39,7 +38,8 @@
     "friendsofphp/php-cs-fixer": "^2.15",
     "phpstan/phpstan": "^0.12.0@dev",
     "phpunit/phpunit": "^9.0@dev",
-    "symfony/profiler-pack": "^1.0"
+    "symfony/profiler-pack": "^1.0",
+    "theofidry/alice-data-fixtures": "^1.0@dev"
   },
   "config": {
     "preferred-install": {
