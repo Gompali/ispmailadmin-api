@@ -2,7 +2,12 @@ doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
         driver: 'pdo_mysql'
-        server_version: '5.5.62'
+        server_version: '5.7'
+        dbname:     mailserver
+        host:       localhost
+        port:       3306
+        user:       mailadmin
+        password:   'env(%MAILADMIN_PASSWORD%)'
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
