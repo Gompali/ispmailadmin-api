@@ -10,9 +10,7 @@
    
     Requirements are PHP > 7.1.3 and composer installed : if $ composer --version has no output
     
-    ```
-     $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
-    ```
+    $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
     
     Clone or download the repository under your web api directory : webmail.example.org/api
     Modify your apache configuration to expose the API. 
