@@ -7,15 +7,16 @@
 
 ## Installation
     
-    To use this repository you should clone or download it under your web directory :
-    webmail.example.org/admin/api or whatever
-    Add the alias in the apache https vhost.
-
-    WARNING: IF YOU USE THIS API, THE DATABASE SCHEMA WILL BE REGENERATED AND DATABASE
-    WILL BE EMPTIED ONCE   
-    
+   
     Requirements are PHP > 7.1.3 and composer installed : if $ composer --version has no output
-    $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    
+    ```
+     $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
+    ```
+    
+    Clone or download the repository under your web api directory : webmail.example.org/api
+     Modify your apache configuration to expose the API. 
+
     
     1. First deploy the symfony app. Go to the root of this directory * (this project) and run :
     
@@ -26,24 +27,23 @@
         
     2. Export environment variables to your server :
     
-        If you're familiar and happy to use secrets, there's a new feature in Symfony that allowa that :
-        https://symfony.com/blog/new-in-symfony-4-4-encrypted-secrets-management
-        
-        If you don't know about secrets, you would maybe have better use tranditionnal environment files :
-        // Template is in .env file
-    
-        // Variables required : they come from tutorial
+        You can use secrets for your credentials: https://symfony.com/blog/new-in-symfony-4-4-encrypted-secrets-management        
+        If you don't know about secrets, you would better use tranditionnal environment files :
+
+        Copy .env file to .env.local on your production server, fill in missing values.   
+
+        ## Values from tutorial :
         MAILADMIN_PASSWORD=zsgz8svd3ciBRISeJvqjzsgzzsgz
         MAILSERVER_PASSWORD=2OEWsABCtgRe6a0ovOcgAs2OEWssd
         
-        // These url contains credential of the database root user
+        ## Root credntials and host information:
         DATABASE_URL=mysql://root:zsgz8svd3ciBRISeJvqjzsgzzsgz@localhost:3306/mailserver
         
-        // These values are used to create an API admin user
+        ## Web api admin user
         ADMIN_PASSWORD='api-admin-user-password'
         ADMIN_USERNAME='api-admin-username'
-                
-        // Generate keys for JWT Token
+                 
+        ## Then Generate keys for JWT Token
         $ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
         $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout                
      
