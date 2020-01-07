@@ -73,13 +73,14 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
     {
         try {
             $data = $this->jwtEncoder->decode($credentials);
+            dump($data);
         } catch (JWTDecodeFailureException $exception) {
-            return new JsonResponse('token not decoded');
+            die($exception->getMessage());
             throw new AuthenticationException($exception->getMessage());
         }
 
         if (false === $data) {
-            return new JsonResponse('decoder returned empty data');
+            die('encoder returned null');
             throw new CustomUserMessageAuthenticationException('Invalid token');
         }
 

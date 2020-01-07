@@ -53,7 +53,10 @@
         First drop the database from tutorial
         $ bin/console d:d:d --force
         
-        Then rebuild it
+        Create empty database
+        $ bin/console d:d:c
+        
+        Rebuild schema with migrations
         $ bin/console d:d:m
         
         Create an admin account for API 
@@ -73,6 +76,7 @@
         	"username" : "api-admin-username",
         	"password" : "api-admin-user-password"
         }
+        
 
      
      - if login succeed the api will return a Bearer token (a long string known as JWT Token)
