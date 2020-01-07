@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200106235723 extends AbstractMigration
+final class Version20200107204821 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -33,13 +33,6 @@ final class Version20200106235723 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE virtual_users DROP FOREIGN KEY FK_3C68956A115F0EE5');
-        $this->addSql('ALTER TABLE virtual_aliases DROP FOREIGN KEY FK_696568F6115F0EE5');
-        $this->addSql('DROP TABLE virtual_users');
-        $this->addSql('DROP TABLE api_admin');
-        $this->addSql('DROP TABLE virtual_aliases');
-        $this->addSql('DROP TABLE virtual_domains');
     }
 }
