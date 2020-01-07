@@ -26,14 +26,20 @@
         
     2. Export environment variables to your server :
     
-        Template is in .env file
+        If you're familiar and happy to use secrets, there's a new feature in Symfony that allowa that :
+        https://symfony.com/blog/new-in-symfony-4-4-encrypted-secrets-management
+        
+        If you don't know about secrets, you would maybe have better use tranditionnal environment files :
+        // Template is in .env file
     
-        // These values are required for the API to gain access to mailserver DB
+        // Variables required : they come from tutorial
         MAILADMIN_PASSWORD=zsgz8svd3ciBRISeJvqjzsgzzsgz
         MAILSERVER_PASSWORD=2OEWsABCtgRe6a0ovOcgAs2OEWssd
-        DATABASE_URL=mysql://mailadmin:zsgz8svd3ciBRISeJvqjzsgzzsgz@localhost:3306/mailserver
         
-        // These values are required to create an API admin user
+        // These url contains credential of the database root user
+        DATABASE_URL=mysql://root:zsgz8svd3ciBRISeJvqjzsgzzsgz@localhost:3306/mailserver
+        
+        // These values are used to create an API admin user
         ADMIN_PASSWORD='api-admin-user-password'
         ADMIN_USERNAME='api-admin-username'
                 
@@ -44,13 +50,14 @@
                 
      3. Generate model :
      
+        First drop the database from tutorial
+        $ bin/console d:d:d --force
+        
+        Then rebuild it
         $ bin/console d:d:m
+        
+        Create an admin account for API 
         $ bin/console create:admin
-        
-        The first command will re-create the mailserver db with users mailadmin and mailserver with the same
-        grants as in tutorial
-        
-        The second command create an admin user that can auth at /login route
         
 
 ## Documentation
