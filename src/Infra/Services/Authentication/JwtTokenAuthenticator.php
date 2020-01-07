@@ -59,6 +59,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         $token = $extractor->extract($request);
 
         if (!$token) {
+            return new JsonResponse('token not extracted');
             throw new AuthenticationException('Token not found');
         }
 
@@ -73,10 +74,12 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         try {
             $data = $this->jwtEncoder->decode($credentials);
         } catch (JWTDecodeFailureException $exception) {
+            return new JsonResponse('token not decoded');
             throw new AuthenticationException($exception->getMessage());
         }
 
         if (false === $data) {
+            return new JsonResponse('decoder returned empty data');
             throw new CustomUserMessageAuthenticationException('Invalid token');
         }
 
@@ -133,6 +136,6 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->headers->has('Authorization');
+        return true;
     }
 }
