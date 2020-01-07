@@ -15,8 +15,14 @@
     ```
     
     Clone or download the repository under your web api directory : webmail.example.org/api
-     Modify your apache configuration to expose the API. 
+    Modify your apache configuration to expose the API. 
 
+    Don't forget to forward mannualy Authorization header by adding in your configuration :
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+    
+    https://github.com/symfony/symfony/issues/19693
     
     1. First deploy the symfony app. Go to the root of this directory * (this project) and run :
     
