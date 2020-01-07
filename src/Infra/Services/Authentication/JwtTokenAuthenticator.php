@@ -51,11 +51,6 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-
-
-
-        dd($headers = $request->headers->all());
-
         $extractor = new AuthorizationHeaderTokenExtractor(
             'Bearer',
             'Authorization'
@@ -78,12 +73,10 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         try {
             $data = $this->jwtEncoder->decode($credentials);
         } catch (JWTDecodeFailureException $exception) {
-            die($exception->getMessage());
             throw new AuthenticationException($exception->getMessage());
         }
 
         if (false === $data) {
-            echo 'encoder returned null'; die();
             throw new CustomUserMessageAuthenticationException('Invalid token');
         }
 
