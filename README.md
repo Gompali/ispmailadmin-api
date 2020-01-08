@@ -7,16 +7,19 @@
 
 ## Installation
     
-   
-    Requirements are PHP > 7.1.3 and composer installed : if $ composer --version has no output
-    
-    ```
-     $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
-    ```
+    - Require PHP > 7.1.3 
+    - Composer : $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
     
     Clone or download the repository under your web api directory : webmail.example.org/api
-     Modify your apache configuration to expose the API. 
+    Modify your apache configuration to expose the API. 
 
+    Don't forget to forward mannualy Authorization header by adding in your configuration :
+        
+        RewriteEngine On
+        RewriteCond %{HTTP:Authorization} ^(.*)
+        RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+    
+    https://github.com/symfony/symfony/issues/19693
     
     1. First deploy the symfony app. Go to the root of this directory * (this project) and run :
     
@@ -36,7 +39,7 @@
         MAILADMIN_PASSWORD=zsgz8svd3ciBRISeJvqjzsgzzsgz
         MAILSERVER_PASSWORD=2OEWsABCtgRe6a0ovOcgAs2OEWssd
         
-        ## Root credntials and host information:
+        ## Root credentials and host information:
         DATABASE_URL=mysql://root:zsgz8svd3ciBRISeJvqjzsgzzsgz@localhost:3306/mailserver
         
         ## Web api admin user
@@ -53,7 +56,10 @@
         First drop the database from tutorial
         $ bin/console d:d:d --force
         
-        Then rebuild it
+        Create empty database
+        $ bin/console d:d:c
+        
+        Rebuild schema with migrations
         $ bin/console d:d:m
         
         Create an admin account for API 
@@ -73,6 +79,7 @@
         	"username" : "api-admin-username",
         	"password" : "api-admin-user-password"
         }
+        
 
      
      - if login succeed the api will return a Bearer token (a long string known as JWT Token)
