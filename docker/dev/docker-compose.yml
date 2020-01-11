@@ -33,9 +33,21 @@ services:
         idekey=PHPSTORM
 
 
+  database:
+    image: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - 'vmail_volume:/var/lib/mysql:rw'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+
+
 volumes:
   cache_ispmailadmin-api:
   log_ispmailadmin-api:
+  vmail_volume:
 
 networks:
   docker-env:

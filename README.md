@@ -48,7 +48,8 @@
                  
         ## Then Generate keys for JWT Token
         $ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-        $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout                
+        $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout      
+        => paste the passphrase in .env.local : "JWT_PASSPHRASE=your-pass-phrase"          
      
                 
      3. Generate model :
@@ -62,7 +63,7 @@
         Rebuild schema with migrations
         $ bin/console d:d:m
         
-        Create an admin account for API 
+        Create the admin account for API 
         $ bin/console create:admin
         
 
