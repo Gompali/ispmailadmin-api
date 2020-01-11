@@ -7,18 +7,17 @@
 
 ## Installation
     
-   
-    Requirements are PHP > 7.1.3 and composer installed : if $ composer --version has no output
-    
-    $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
+    - Require PHP > 7.1.3 
+    - Composer : $ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer 
     
     Clone or download the repository under your web api directory : webmail.example.org/api
     Modify your apache configuration to expose the API. 
 
     Don't forget to forward mannualy Authorization header by adding in your configuration :
-    RewriteEngine On
-    RewriteCond %{HTTP:Authorization} ^(.*)
-    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+        
+        RewriteEngine On
+        RewriteCond %{HTTP:Authorization} ^(.*)
+        RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
     
     https://github.com/symfony/symfony/issues/19693
     
@@ -40,7 +39,7 @@
         MAILADMIN_PASSWORD=zsgz8svd3ciBRISeJvqjzsgzzsgz
         MAILSERVER_PASSWORD=2OEWsABCtgRe6a0ovOcgAs2OEWssd
         
-        ## Root credntials and host information:
+        ## Root credentials and host information:
         DATABASE_URL=mysql://root:zsgz8svd3ciBRISeJvqjzsgzzsgz@localhost:3306/mailserver
         
         ## Web api admin user
