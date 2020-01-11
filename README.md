@@ -61,7 +61,7 @@
         $ bin/console d:d:c
         
         Rebuild schema with migrations
-        $ bin/console d:d:m
+        $ bin/console d:m:m
         
         Create the admin account for API 
         $ bin/console create:admin
