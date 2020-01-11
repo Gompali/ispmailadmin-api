@@ -1,7 +1,7 @@
 test:
-  path: /test
+  path: /
   methods: GET
-  controller: App\UI\Action\TestAction
+  controller: App\UI\Action\DefaultAction
 
 # Doc
 api_doc:
