@@ -8,12 +8,10 @@ namespace App\UI\Action;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class TestAction
+class DefaultAction
 {
     public function __invoke()
     {
-        $disableIpCheck = getenv('APP_DISABLE_IP_CHECK');
-        return new JsonResponse($disableIpCheck, 200);
+        return new JsonResponse('ok', 200);
     }
-
 }
