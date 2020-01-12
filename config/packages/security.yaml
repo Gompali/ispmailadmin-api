@@ -18,13 +18,12 @@ security:
         api:
             pattern:   ^/
             stateless: true
-            anonymous: true
+            anonymous: lazy
             guard:
                 authenticators:
                     - jwt_token_authenticator
 
     access_control:
-        - { path: ^/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/test, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_ADMIN }

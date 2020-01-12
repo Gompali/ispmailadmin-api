@@ -20,6 +20,30 @@
         RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
     
     https://github.com/symfony/symfony/issues/19693
+
+    Your vhost could look like : 
+        
+    <VirtualHost *:80>
+      ServerName webmail-api.hangukeo.eu
+      DocumentRoot /var/www/webmail-api.hangukeo.eu/public
+    
+      <Directory /var/www/webmail-api.hangukeo.eu/public>
+        
+        RewriteEngine On
+        RewriteCond %{REQUEST_URI} !.well-known/acme-challenge
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule . index.php [L]
+        
+        RewriteCond %{HTTP:Authorization} ^(.*)
+        RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+      </Directory>
+    
+    </VirtualHost>
+    
+    
+
+    
     
     1. First deploy the symfony app. Go to the root of this directory * (this project) and run :
     
